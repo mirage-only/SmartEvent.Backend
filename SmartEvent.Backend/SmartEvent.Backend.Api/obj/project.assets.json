@@ -1,11 +1,88 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {}
+    "net10.0": {
+      "SmartEvent.Backend.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "SmartEvent.Backend.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartEvent.Backend.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartEvent.Backend.Application.dll": {}
+        }
+      },
+      "SmartEvent.Backend.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/SmartEvent.Backend.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartEvent.Backend.Core.dll": {}
+        }
+      },
+      "SmartEvent.Backend.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "SmartEvent.Backend.Application": "1.0.0",
+          "SmartEvent.Backend.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartEvent.Backend.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartEvent.Backend.Infrastructure.dll": {}
+        }
+      },
+      "SmartEvent.Backend.Persistence/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "SmartEvent.Backend.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartEvent.Backend.Persistence.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartEvent.Backend.Persistence.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "SmartEvent.Backend.Application/1.0.0": {
+      "type": "project",
+      "path": "../SmartEvent.Backend.Application/SmartEvent.Backend.Application.csproj",
+      "msbuildProject": "../SmartEvent.Backend.Application/SmartEvent.Backend.Application.csproj"
+    },
+    "SmartEvent.Backend.Core/1.0.0": {
+      "type": "project",
+      "path": "../SmartEvent.Backend.Core/SmartEvent.Backend.Core.csproj",
+      "msbuildProject": "../SmartEvent.Backend.Core/SmartEvent.Backend.Core.csproj"
+    },
+    "SmartEvent.Backend.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../SmartEvent.Backend.Infrastructure/SmartEvent.Backend.Infrastructure.csproj",
+      "msbuildProject": "../SmartEvent.Backend.Infrastructure/SmartEvent.Backend.Infrastructure.csproj"
+    },
+    "SmartEvent.Backend.Persistence/1.0.0": {
+      "type": "project",
+      "path": "../SmartEvent.Backend.Persistence/SmartEvent.Backend.Persistence.csproj",
+      "msbuildProject": "../SmartEvent.Backend.Persistence/SmartEvent.Backend.Persistence.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net10.0": []
+    "net10.0": [
+      "SmartEvent.Backend.Application >= 1.0.0",
+      "SmartEvent.Backend.Core >= 1.0.0",
+      "SmartEvent.Backend.Infrastructure >= 1.0.0",
+      "SmartEvent.Backend.Persistence >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\zheny\\.nuget\\packages\\": {}
@@ -31,7 +108,20 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Application\\SmartEvent.Backend.Application.csproj": {
+              "projectPath": "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Application\\SmartEvent.Backend.Application.csproj"
+            },
+            "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Core\\SmartEvent.Backend.Core.csproj": {
+              "projectPath": "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Core\\SmartEvent.Backend.Core.csproj"
+            },
+            "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Infrastructure\\SmartEvent.Backend.Infrastructure.csproj": {
+              "projectPath": "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Infrastructure\\SmartEvent.Backend.Infrastructure.csproj"
+            },
+            "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Persistence\\SmartEvent.Backend.Persistence.csproj": {
+              "projectPath": "D:\\University\\Practice\\SmartEvent.Backend\\SmartEvent.Backend\\SmartEvent.Backend.Persistence\\SmartEvent.Backend.Persistence.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

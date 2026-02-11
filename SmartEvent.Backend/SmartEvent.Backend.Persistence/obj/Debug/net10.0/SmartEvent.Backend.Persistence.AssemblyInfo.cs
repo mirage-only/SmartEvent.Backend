@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartEvent.Backend.Persistence")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8f313440dbb78702ec3ab05a2cfe570121788b7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec0e975e49adef2879900be1da46a6083e96c8ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartEvent.Backend.Persistence")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartEvent.Backend.Persistence")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

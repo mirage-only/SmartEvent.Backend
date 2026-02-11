@@ -6,4 +6,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Security\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SmartEvent.Backend.Application\SmartEvent.Backend.Application.csproj" />
+      <ProjectReference Include="..\SmartEvent.Backend.Core\SmartEvent.Backend.Core.csproj" />
+    </ItemGroup>
+
 </Project>
