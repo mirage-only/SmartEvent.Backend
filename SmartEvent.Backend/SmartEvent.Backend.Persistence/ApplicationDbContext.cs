@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SmartEvent.Backend.Core.Interfaces.IModels;
 using SmartEvent.Backend.Core.Models;
 using SmartEvent.Backend.Persistence.Configurations;
 
@@ -22,5 +23,36 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.ApplyConfiguration(new RegistrationConfiguration());
         
         base.OnModelCreating(modelBuilder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        UpdateAuditableInformation();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override int SaveChanges()
+    {
+        UpdateAuditableInformation();
+        return base.SaveChanges();
+    }
+
+    private void UpdateAuditableInformation()
+    {
+        var modifiedEntries = ChangeTracker.Entries<IAuditableModel>();
+
+        foreach (var entry in modifiedEntries)
+        {
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.CreatedAt = DateTime.UtcNow;
+                entry.Entity.UpdatedAt = DateTime.UtcNow;
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                entry.Property(model => model.CreatedAt).IsModified = false;
+                entry.Entity.UpdatedAt = DateTime.UtcNow;
+            }
+        }
     }
 }
