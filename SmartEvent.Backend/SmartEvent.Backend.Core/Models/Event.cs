@@ -1,6 +1,8 @@
-﻿namespace SmartEvent.Backend.Core.Models
+﻿using SmartEvent.Backend.Core.Interfaces.IModels;
+
+namespace SmartEvent.Backend.Core.Models
 {
-    public class Event
+    public class Event: IAuditableModel
     {
         public Guid Id { get; set; }
 
@@ -13,6 +15,9 @@
 
         public Guid CreatorId { get; set; }
         public User? Creator { get; set; }
+        
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public QrCode QrCode { get; set; }
 

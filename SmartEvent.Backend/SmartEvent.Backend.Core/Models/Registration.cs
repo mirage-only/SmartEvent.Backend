@@ -10,7 +10,7 @@
         public Guid EventId { get; init; }
         public Event? Event { get; set; }
 
-        public DateTime RegisteredAt { get; set; }
+        public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
 
         public bool IsCancelled { get; set; } = false;
     }
