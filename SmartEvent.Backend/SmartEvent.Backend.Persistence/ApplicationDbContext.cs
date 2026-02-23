@@ -12,6 +12,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Attendance>  Attendances { get; set; }
     public DbSet<QrCode> QrCodes { get; set; }
     public DbSet<Registration> Registrations { get; set; }
+    public DbSet<EventOrganizer> EventOrganizers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
