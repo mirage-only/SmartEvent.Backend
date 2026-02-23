@@ -1,8 +1,9 @@
 ﻿using SmartEvent.Backend.Core.Enums;
+using SmartEvent.Backend.Core.Interfaces.IModels;
 
 namespace SmartEvent.Backend.Core.Models
 {
-    public class User
+    public class User: IAuditableModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         
