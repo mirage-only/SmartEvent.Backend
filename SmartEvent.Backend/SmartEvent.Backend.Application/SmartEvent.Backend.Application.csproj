@@ -7,8 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\" />
-      <Folder Include="Interfaces\" />
+      <Folder Include="DTOs\AttendanceDTOs\Requests\" />
+      <Folder Include="DTOs\AttendanceDTOs\Responses\" />
+      <Folder Include="DTOs\EventDTOs\Requests\" />
+      <Folder Include="DTOs\EventDTOs\Responses\" />
+      <Folder Include="DTOs\QrCodeDTOs\Requests\" />
+      <Folder Include="DTOs\QrCodeDTOs\Responses\" />
+      <Folder Include="DTOs\RegistrationDTOs\Requests\" />
+      <Folder Include="DTOs\RegistrationDTOs\Responses\" />
+      <Folder Include="DTOs\UserDTOs\Requests\" />
+      <Folder Include="DTOs\UserDTOs\Responses\" />
+      <Folder Include="Interfaces\IServices\" />
       <Folder Include="Mapping\" />
       <Folder Include="Services\" />
     </ItemGroup>
