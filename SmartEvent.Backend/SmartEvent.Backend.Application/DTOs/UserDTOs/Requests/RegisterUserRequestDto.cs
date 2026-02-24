@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SmartEvent.Backend.Application.DTOs.UserDTOs.Requests
+﻿namespace SmartEvent.Backend.Application.DTOs.UserDTOs.Requests
 {
     public class RegisterUserRequestDto
     {

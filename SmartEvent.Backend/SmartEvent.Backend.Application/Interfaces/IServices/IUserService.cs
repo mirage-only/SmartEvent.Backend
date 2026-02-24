@@ -1,9 +1,6 @@
 ﻿using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Responses;
 using SmartEvent.Backend.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SmartEvent.Backend.Application.Interfaces.IServices
 {

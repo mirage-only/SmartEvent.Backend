@@ -1,7 +1,4 @@
 ﻿using SmartEvent.Backend.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SmartEvent.Backend.Application.DTOs.UserDTOs.Responses
 {
