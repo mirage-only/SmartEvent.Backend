@@ -15,11 +15,11 @@
       <Folder Include="DTOs\QrCodeDTOs\Responses\" />
       <Folder Include="DTOs\RegistrationDTOs\Requests\" />
       <Folder Include="DTOs\RegistrationDTOs\Responses\" />
-      <Folder Include="DTOs\UserDTOs\Requests\" />
-      <Folder Include="DTOs\UserDTOs\Responses\" />
-      <Folder Include="Interfaces\IServices\" />
-      <Folder Include="Mapping\" />
-      <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="16.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.3" />
     </ItemGroup>
 
     <ItemGroup>
