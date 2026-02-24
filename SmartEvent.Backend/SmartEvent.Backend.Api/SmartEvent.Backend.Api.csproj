@@ -4,6 +4,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>2f75fac3-dba6-4e38-8f21-61a9a55da2aa</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +16,20 @@
       <ProjectReference Include="..\SmartEvent.Backend.Core\SmartEvent.Backend.Core.csproj" />
       <ProjectReference Include="..\SmartEvent.Backend.Infrastructure\SmartEvent.Backend.Infrastructure.csproj" />
       <ProjectReference Include="..\SmartEvent.Backend.Persistence\SmartEvent.Backend.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

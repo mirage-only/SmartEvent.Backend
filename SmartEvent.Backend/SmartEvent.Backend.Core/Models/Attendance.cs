@@ -12,7 +12,7 @@ namespace SmartEvent.Backend.Core.Models
         public Guid EventId { get; set; }
         public Event? Event { get; set; }
 
-        public DateTime ConfirmedAt { get; set; }
+        public DateTime ConfirmedAt { get; set; } = DateTime.Now;
 
         public AttendanceMethod Method { get; set; }
 
