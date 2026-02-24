@@ -16,11 +16,13 @@ public class AttendanceConfiguration: IEntityTypeConfiguration<Attendance>
         builder
             .HasOne(attendance => attendance.User)
             .WithMany(user => user.Attendances)
-            .HasForeignKey(attendance => attendance.UserId);
+            .HasForeignKey(attendance => attendance.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         builder
             .HasOne(attendance => attendance.Event)
             .WithMany(@event => @event.Attendances)
-            .HasForeignKey(attendance => attendance.UserId);
+            .HasForeignKey(attendance => attendance.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

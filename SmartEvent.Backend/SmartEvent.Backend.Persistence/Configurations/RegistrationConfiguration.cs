@@ -15,17 +15,18 @@ public class RegistrationConfiguration : IEntityTypeConfiguration<Registration>
         
         builder.Property(registration => registration.UserId).IsRequired();
         
-        builder.Property(registration => registration.IsCancelled).IsRequired();
         builder.Property(registration => registration.RegisteredAt).IsRequired();
 
         builder
             .HasOne(registration => registration.User)
             .WithMany(user => user.Registrations)
-            .HasForeignKey(registration => registration.UserId);
+            .HasForeignKey(registration => registration.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         builder
             .HasOne(registration => registration.Event)
             .WithMany(@event => @event.Registrations)
-            .HasForeignKey(registration => registration.EventId);
+            .HasForeignKey(registration => registration.EventId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

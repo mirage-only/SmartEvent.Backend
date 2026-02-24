@@ -18,6 +18,7 @@ public class QrCodeConfiguration: IEntityTypeConfiguration<QrCode>
         builder
             .HasOne(qrCode => qrCode.Event)
             .WithMany(@event => @event.PastQrCodes)
-            .HasForeignKey(qrCode => qrCode.EventId);
+            .HasForeignKey(qrCode => qrCode.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
