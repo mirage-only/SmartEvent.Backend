@@ -15,12 +15,12 @@ namespace SmartEvent.Backend.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public IQueryable<Registration> GetAllRegistrations()
+        public IEnumerable<Registration> GetAllRegistrations()
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Registration> GetAllRegistrationsByEventId(Guid eventId)
+        public IEnumerable<Registration> GetAllRegistrationsByEventId(Guid eventId)
         {
             throw new NotImplementedException();
         }

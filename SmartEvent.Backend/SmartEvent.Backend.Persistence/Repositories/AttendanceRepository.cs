@@ -5,27 +5,17 @@ namespace SmartEvent.Backend.Persistence.Repositories
 {
     public class AttendanceRepository() : IAttendanceRepository
     {
-        public Task<Attendance> AddAttendance(Attendance attendance)
+        public IEnumerable<Attendance> GetAllAttendances()
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAttendance(Guid id)
+        public IEnumerable<Attendance> GetAllAttendancesByUserId(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Attendance> GetAllAttendances()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Attendance> GetAllAttendancesByEventId(Guid eventId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Attendance> GetAllAttendancesByUserId(Guid userId)
+        public IEnumerable<Attendance> GetAllAttendancesByEventId(Guid eventId)
         {
             throw new NotImplementedException();
         }
@@ -35,7 +25,17 @@ namespace SmartEvent.Backend.Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<Attendance> AddAttendance(Attendance attendance)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Attendance> UpdateAttendance(Attendance attendance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAttendance(Guid id)
         {
             throw new NotImplementedException();
         }

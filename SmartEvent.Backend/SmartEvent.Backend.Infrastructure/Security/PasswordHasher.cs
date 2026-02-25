@@ -1,7 +1,7 @@
-﻿using SmartEvent.Backend.Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using SmartEvent.Backend.Application.Interfaces.IServices;
 
-namespace SmartEvent.Backend.Application.Services
+namespace SmartEvent.Backend.Infrastructure.Security
 {
     public class PasswordHasher : IPasswordHasher
     {
