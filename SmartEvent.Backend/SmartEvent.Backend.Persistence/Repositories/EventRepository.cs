@@ -5,17 +5,7 @@ namespace SmartEvent.Backend.Persistence.Repositories
 {
     public class EventRepository() : IEventRepository
     {
-        public Task<Event> AddEvent(Event @event)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteEvent(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Event> GetAllEvents()
+        public IEnumerable<Event> GetAllEvents()
         {
             throw new NotImplementedException();
         }
@@ -25,7 +15,17 @@ namespace SmartEvent.Backend.Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<Event> AddEvent(Event @event)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Event> UpdateEvent(Event @event)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteEvent(Guid id)
         {
             throw new NotImplementedException();
         }

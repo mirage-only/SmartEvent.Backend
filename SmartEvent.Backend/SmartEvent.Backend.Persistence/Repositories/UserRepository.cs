@@ -6,41 +6,40 @@ namespace SmartEvent.Backend.Persistence.Repositories
 {
     public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
     {
-        private readonly ApplicationDbContext _dbContext = dbContext;
         public async Task<User> AddUser(User user)
-        {
-            await _dbContext.Users.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
+        { 
+            dbContext.Users.Add(user);
+            await dbContext.SaveChangesAsync();
             return user;
         }
 
         public async Task DeleteUser(Guid id)
         {
-            var user = await _dbContext.Users.FindAsync(id);
+            var user = await dbContext.Users.FindAsync(id);
             if (user == null) throw new Exception("User is not found");
-            _dbContext.Users.Remove(user);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Users.Remove(user);
+            await dbContext.SaveChangesAsync();
         }
 
-        public IQueryable<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
-            return _dbContext.Users.AsQueryable();
+            return dbContext.Users.AsNoTracking();
         }
 
         public async Task<User?> GetUserByEmail(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return await dbContext.Users.FirstOrDefaultAsync(user => user.Email == email);
         }
 
         public async Task<User?> GetUserById(Guid id)
         {
-            return await _dbContext.Users.FindAsync(id);
+            return await dbContext.Users.FindAsync(id);
         }
 
         public async Task<User> UpdateUser(User user)
         {
-            _dbContext.Users.Update(user);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Users.Update(user);
+            await dbContext.SaveChangesAsync();
             return user;
         }
     }
