@@ -7,19 +7,8 @@ using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Application.Services
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher) : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-        private readonly IPasswordHasher _passwordHasher;
-
-        public UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher passwordHasher)
-        {
-            _userRepository = userRepository;
-            _mapper = mapper;
-            _passwordHasher = passwordHasher;
-        }
-
         public Task<AssignRoleResponseDto> AssignRoleAsync(AssignRoleRequestDto request)
         {
             throw new NotImplementedException();
@@ -30,14 +19,14 @@ namespace SmartEvent.Backend.Application.Services
             string invalidIpnutExeption = "Invalid email or password";
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var user = await _userRepository.GetUserByEmail(request.Email);
+            var user = await userRepository.GetUserByEmail(request.Email);
 
             if(user == null) 
                 throw new Exception(invalidIpnutExeption);
-            if(!_passwordHasher.Verify(user.PasswordHash, request.Password))
+            if(!passwordHasher.Verify(user.PasswordHash, request.Password))
                 throw new Exception(invalidIpnutExeption);
 
-            var response = _mapper.Map<AuthorizeUserResponseDto>(user);
+            var response = mapper.Map<AuthorizeUserResponseDto>(user);
             response.Token = "jwt will be here";
             return response;
         }
@@ -66,21 +55,21 @@ namespace SmartEvent.Backend.Application.Services
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var existing = await _userRepository.GetUserByEmail(request.Email);
+            var existing = await userRepository.GetUserByEmail(request.Email);
             if (existing != null)
             {
                 throw new Exception("User with this email already exists");
             }
 
-            var user = _mapper.Map<User>(request);
-            user.PasswordHash = _passwordHasher.Hash(request.Password);
+            var user = mapper.Map<User>(request);
+            user.PasswordHash = passwordHasher.Hash(request.Password);
             user.UserRole = Core.Enums.UserRole.Student;
             user.CreatedAt = DateTime.UtcNow;
             user.UpdatedAt = DateTime.UtcNow;
 
-            await _userRepository.AddUser(user);
+            await userRepository.AddUser(user);
 
-            var response = _mapper.Map<AuthorizeUserResponseDto>(user);
+            var response = mapper.Map<AuthorizeUserResponseDto>(user);
             response.Token = "jwt will be here";
             return response;
         }

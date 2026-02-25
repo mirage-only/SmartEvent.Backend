@@ -15,7 +15,7 @@ namespace SmartEvent.Backend.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public IQueryable<QrCode> GetAllQrCodes()
+        public IEnumerable<QrCode> GetAllQrCodes()
         {
             throw new NotImplementedException();
         }
