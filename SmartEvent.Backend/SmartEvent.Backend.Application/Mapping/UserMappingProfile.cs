@@ -10,10 +10,6 @@ namespace SmartEvent.Backend.Application.Mapping
         {
             // User -> UserDto
             CreateMap<User, UserDto>();
-
-            // User -> AuthorizeUserResponseDto
-            CreateMap<User, AuthorizeUserResponseDto>()
-                .ForMember(dest => dest.Token, opt => opt.Ignore());
         }
     }
 }
