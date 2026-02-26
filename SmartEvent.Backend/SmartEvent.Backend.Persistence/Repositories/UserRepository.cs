@@ -21,7 +21,7 @@ namespace SmartEvent.Backend.Persistence.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
             return dbContext.Users.AsNoTracking();
         }
