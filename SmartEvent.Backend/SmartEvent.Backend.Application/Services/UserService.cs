@@ -12,19 +12,18 @@ namespace SmartEvent.Backend.Application.Services
     {
         public async Task<AuthorizeUserResponseDto> RegisterUserAsync(RegisterUserRequestDto? request)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            ArgumentNullException.ThrowIfNull(request);
 
             var existing = await userRepository.GetUserByEmail(request.Email);
+            
             if (existing != null)
             {
-                throw new Exception("User with this email already exists");
+                throw new NullReferenceException("User with this email already exists");
             }
 
             var user = mapper.Map<User>(request);
             user.PasswordHash = passwordHasher.Hash(request.Password);
             user.UserRole = Core.Enums.UserRole.Student;
-            user.CreatedAt = DateTime.UtcNow;
-            user.UpdatedAt = DateTime.UtcNow;
 
             await userRepository.AddUser(user);
 
@@ -40,27 +39,23 @@ namespace SmartEvent.Backend.Application.Services
         
         public async Task<AuthorizeUserResponseDto> AuthorizeUserAsync(LoginUserRequestDto? request)
         {
-            string invalidInputExeption = "Invalid email or password";
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            const string invalidInputExсeption = "Invalid email or password";
+            ArgumentNullException.ThrowIfNull(request);
 
             var user = await userRepository.GetUserByEmail(request.Email);
 
-            if(user == null) 
-                throw new Exception(invalidInputExeption);
-            
-            if (passwordHasher.Verify(user.PasswordHash, request.Password))
-            {
-                var token = jwtService.GenerateJwtToken(user);
+            if(user == null || !passwordHasher.Verify(user.PasswordHash, request.Password)) 
+                throw new Exception(invalidInputExсeption);
 
-                var responseDto = new AuthorizeUserResponseDto()
-                {
-                    JwtToken = token
-                };
+            var token = jwtService.GenerateJwtToken(user);
+
+            var responseDto = new AuthorizeUserResponseDto()
+            {
+                JwtToken = token
+            };
                 
-                return responseDto;
-            }
-            
-            throw new Exception(invalidInputExeption);
+            return responseDto;
+
         }
 
         public Task DeleteUserAsync(Guid id)

@@ -4,7 +4,7 @@ namespace SmartEvent.Backend.Core.Interfaces.IRepositories
 {
     public interface IUserRepository
     {
-        public IEnumerable<User> GetAllUsers();
+        public Task<IEnumerable<User>> GetAllUsers();
         public Task<User?> GetUserById(Guid id);
         public Task<User?> GetUserByEmail(string email);
         public Task<User> AddUser(User user);
