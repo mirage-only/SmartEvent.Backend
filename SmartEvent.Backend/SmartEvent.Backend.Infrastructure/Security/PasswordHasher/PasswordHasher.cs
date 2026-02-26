@@ -1,7 +1,7 @@
-﻿using SmartEvent.Backend.Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using SmartEvent.Backend.Application.Interfaces.IServices;
 
-namespace SmartEvent.Backend.Application.Services
+namespace SmartEvent.Backend.Infrastructure.Security.PasswordHasher
 {
     public class PasswordHasher : IPasswordHasher
     {
@@ -14,7 +14,8 @@ namespace SmartEvent.Backend.Application.Services
         public bool Verify(string hash, string password)
         {
             var result = _passwordHasher.VerifyHashedPassword(null, hash, password);
-            return result == PasswordVerificationResult.Success;
+            
+            return result is PasswordVerificationResult.Success or PasswordVerificationResult.SuccessRehashNeeded;
         }
     }
 }
