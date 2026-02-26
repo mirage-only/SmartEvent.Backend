@@ -8,9 +8,11 @@ namespace SmartEvent.Backend.Api.Controllers;
 
 [ApiController]
 [Route("users")]
+[Authorize]
 public class UserController(IUserService userService): ControllerBase 
 {
     [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<ActionResult<AuthorizeUserResponseDto>> RegisterUser([FromBody] RegisterUserRequestDto requestDto)
     {
         try
@@ -19,6 +21,14 @@ public class UserController(IUserService userService): ControllerBase
             
             return Ok(response);
         }
+        catch (ArgumentException e)
+        {
+            return BadRequest("Something went wrong");
+        }
+        catch (NullReferenceException e)
+        {
+            return Unauthorized("Username or password is incorrect");
+        }
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -26,6 +36,7 @@ public class UserController(IUserService userService): ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<ActionResult<AuthorizeUserResponseDto>> Login([FromBody] LoginUserRequestDto requestDto)
     {
         try
