@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Responses;
 using SmartEvent.Backend.Application.Interfaces.IServices;
+using SmartEvent.Backend.Core.Common;
 using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
 
@@ -10,15 +12,16 @@ namespace SmartEvent.Backend.Application.Services
     public class UserService(IUserRepository userRepository, IMapper mapper,
         IPasswordHasher passwordHasher, IJwtService jwtService) : IUserService
     {
-        public async Task<AuthorizeUserResponseDto> RegisterUserAsync(RegisterUserRequestDto? request)
+        public async Task<Result<AuthorizeUserResponseDto>> RegisterUserAsync(RegisterUserRequestDto? request)
         {
+            const string userExistMessage = "User with this  email already exists";
             ArgumentNullException.ThrowIfNull(request);
 
-            var existing = await userRepository.GetUserByEmail(request.Email);
+            var existingUser = await userRepository.GetUserByEmail(request.Email);
             
-            if (existing != null)
+            if (existingUser != null)
             {
-                throw new NullReferenceException("User with this email already exists");
+                return  Result<AuthorizeUserResponseDto>.Failure(userExistMessage,  HttpStatusCode.Conflict);
             }
 
             var user = mapper.Map<User>(request);
@@ -29,33 +32,44 @@ namespace SmartEvent.Backend.Application.Services
 
             var token = jwtService.GenerateJwtToken(user);
 
-            var response = new AuthorizeUserResponseDto
+            var responseDto = new AuthorizeUserResponseDto
             {
                 JwtToken = token
             };
             
+            var response = Result<AuthorizeUserResponseDto>.Success(responseDto);
+            
             return response;
         }
         
-        public async Task<AuthorizeUserResponseDto> AuthorizeUserAsync(LoginUserRequestDto? request)
+        public async Task<Result<AuthorizeUserResponseDto>> AuthorizeUserAsync(LoginUserRequestDto? request)
         {
-            const string invalidInputExсeption = "Invalid email or password";
+            const string notFoundUserMessage = "User not found";
+            const string invalidPasswordMessage = "Check your email or  password";
+            
             ArgumentNullException.ThrowIfNull(request);
 
             var user = await userRepository.GetUserByEmail(request.Email);
+            
+            if(user == null) return Result<AuthorizeUserResponseDto>
+                .Failure(notFoundUserMessage, HttpStatusCode.NotFound);
 
-            if(user == null || !passwordHasher.Verify(user.PasswordHash, request.Password)) 
-                throw new Exception(invalidInputExсeption);
-
+            if (!passwordHasher.Verify(user.PasswordHash, request.Password))
+            {
+                return Result<AuthorizeUserResponseDto>
+                    .Failure(invalidPasswordMessage, HttpStatusCode.Unauthorized);
+            }
+            
             var token = jwtService.GenerateJwtToken(user);
 
             var responseDto = new AuthorizeUserResponseDto()
             {
                 JwtToken = token
             };
-                
-            return responseDto;
-
+            
+            var response = Result<AuthorizeUserResponseDto>.Success(responseDto);
+            
+            return response;
         }
 
         public Task DeleteUserAsync(Guid id)
