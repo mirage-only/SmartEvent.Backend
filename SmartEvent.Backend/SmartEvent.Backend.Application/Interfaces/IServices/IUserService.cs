@@ -1,12 +1,13 @@
 ﻿using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Responses;
+using SmartEvent.Backend.Core.Common;
 
 namespace SmartEvent.Backend.Application.Interfaces.IServices
 {
     public interface IUserService
     {
-        Task<AuthorizeUserResponseDto> AuthorizeUserAsync(LoginUserRequestDto? request);
-        Task<AuthorizeUserResponseDto> RegisterUserAsync(RegisterUserRequestDto? request);
+        Task<Result<AuthorizeUserResponseDto>> AuthorizeUserAsync(LoginUserRequestDto? request);
+        Task<Result<AuthorizeUserResponseDto>> RegisterUserAsync(RegisterUserRequestDto? request);
 
         Task<UserDto?> GetUserByIdAsync(Guid? id); 
         Task<UserDto?> GetUserByEmailAsync(string? email); 
