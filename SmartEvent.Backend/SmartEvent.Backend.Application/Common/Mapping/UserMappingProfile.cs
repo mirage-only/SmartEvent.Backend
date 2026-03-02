@@ -3,7 +3,7 @@ using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Responses;
 using SmartEvent.Backend.Core.Models;
 
-namespace SmartEvent.Backend.Application.Mapping
+namespace SmartEvent.Backend.Application.Common.Mapping
 {
     public class UserMappingProfile : Profile
     {

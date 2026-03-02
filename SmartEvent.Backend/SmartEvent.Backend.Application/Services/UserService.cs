@@ -1,11 +1,13 @@
 ﻿using System.Net;
 using AutoMapper;
+using SmartEvent.Backend.Application.Common.Validators;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Responses;
 using SmartEvent.Backend.Application.Interfaces.IServices;
 using SmartEvent.Backend.Core.Common;
 using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
+using ValidationException = SmartEvent.Backend.Core.Exceptions.ValidationException;
 
 namespace SmartEvent.Backend.Application.Services
 {
@@ -16,6 +18,14 @@ namespace SmartEvent.Backend.Application.Services
         {
             const string userExistMessage = "User with this  email already exists";
             ArgumentNullException.ThrowIfNull(request);
+
+            var validator = new RegisterUserRequestDtoValidator();
+            var validationResult = await validator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.ToDictionary());
+            }
 
             var existingUser = await userRepository.GetUserByEmail(request.Email);
             
@@ -32,14 +42,9 @@ namespace SmartEvent.Backend.Application.Services
 
             var token = jwtService.GenerateJwtToken(user);
 
-            var responseDto = new AuthorizeUserResponseDto
-            {
-                JwtToken = token
-            };
+            var responseDto = new AuthorizeUserResponseDto { JwtToken = token };
             
-            var response = Result<AuthorizeUserResponseDto>.Success(responseDto);
-            
-            return response;
+            return Result<AuthorizeUserResponseDto>.Success(responseDto);
         }
         
         public async Task<Result<AuthorizeUserResponseDto>> AuthorizeUserAsync(LoginUserRequestDto? request)
