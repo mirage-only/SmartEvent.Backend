@@ -17,6 +17,7 @@ services.AddControllers();
 services.AddSwaggerGen();
 services.AddEndpointsApiExplorer();
 
+services.AddProblemDetails();
 services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
