@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using AutoMapper;
+using SmartEvent.Backend.Application.Common.Models;
 using SmartEvent.Backend.Application.Common.Validators;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Responses;
@@ -8,6 +9,8 @@ using SmartEvent.Backend.Core.Common;
 using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
 using ValidationException = SmartEvent.Backend.Core.Exceptions.ValidationException;
+using AutoMapper.QueryableExtensions;
+using SmartEvent.Backend.Application.Common.Extensions;
 
 namespace SmartEvent.Backend.Application.Services
 {
@@ -17,6 +20,7 @@ namespace SmartEvent.Backend.Application.Services
         public async Task<Result<AuthorizeUserResponseDto>> RegisterUserAsync(RegisterUserRequestDto? request)
         {
             const string userExistMessage = "User with this  email already exists";
+            
             ArgumentNullException.ThrowIfNull(request);
 
             var validator = new RegisterUserRequestDtoValidator();
@@ -77,12 +81,18 @@ namespace SmartEvent.Backend.Application.Services
             return response;
         }
 
-        public Task DeleteUserAsync(Guid id)
+        public async Task<Result<PagedResult<GetUserDto>>> GetAllUsersByAdminAsync(PaginationParams paginationParamsrams)
         {
-            throw new NotImplementedException();
-        }
+            var query = userRepository.GetAllUsers();
+            
+            var mappedQuery = query.ProjectTo<GetUserDto>(mapper.ConfigurationProvider);
+            
+            var pagedResult = await mappedQuery.ToPagedResultAsync(paginationParamsrams.PageNumber, paginationParamsrams.PageSize);
 
-        public Task<IEnumerable<UserDto>> GetAllUsersAsync()
+            return Result<PagedResult<GetUserDto>>.Success(pagedResult);
+        }
+        
+        public Task DeleteUserAsync(Guid id)
         {
             throw new NotImplementedException();
         }
