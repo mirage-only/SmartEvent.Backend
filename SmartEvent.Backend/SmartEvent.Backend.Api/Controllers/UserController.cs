@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartEvent.Backend.Application.Common.Models;
 using SmartEvent.Backend.Application.DTOs.UserDTOs.Requests;
 using SmartEvent.Backend.Application.Interfaces.IServices;
 
@@ -25,6 +26,15 @@ public class UserController(IUserService userService): BaseApiController
     {
         var response = await userService.AuthorizeUserAsync(requestDto);
 
+        return HandleResult(response);
+    }
+
+    [HttpGet("getAllUsersByAdmin")]
+    [Authorize(Policy = "AdminOnly")]
+    public async Task<IActionResult> GetAllUsersByAdmin([FromBody] PaginationParams paginationParams)
+    {
+        var response = await userService.GetAllUsersByAdminAsync(paginationParams);
+        
         return HandleResult(response);
     }
 }
