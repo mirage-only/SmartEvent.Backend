@@ -15,6 +15,8 @@ namespace SmartEvent.Backend.Application.Common.Mapping
             CreateMap<RegisterUserRequestDto, User>()
                 .ForMember(user => user.PasswordHash, passwordHash 
                     => passwordHash.Ignore());
+
+            CreateMap<User, GetUserDto>();
         }
     }
 }

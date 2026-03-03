@@ -21,10 +21,7 @@ namespace SmartEvent.Backend.Persistence.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            return dbContext.Users.AsNoTracking();
-        }
+        public IQueryable<User> GetAllUsers() => dbContext.Users.AsNoTracking();
 
         public async Task<User?> GetUserByEmail(string email)
         {
