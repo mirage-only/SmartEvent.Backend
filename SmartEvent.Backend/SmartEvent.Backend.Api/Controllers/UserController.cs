@@ -29,7 +29,7 @@ public class UserController(IUserService userService): BaseApiController
         return HandleResult(response);
     }
 
-    [HttpGet("getAllUsersByAdmin")]
+    [HttpPost("getAllUsersByAdmin")]
     [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> GetAllUsersByAdmin([FromBody] PaginationParams paginationParams)
     {
