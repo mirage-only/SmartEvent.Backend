@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SmartEvent.Backend.Infrastructure.Security.Jwt;
 
 namespace SmartEvent.Backend.Infrastructure.Security.Extensions;
 

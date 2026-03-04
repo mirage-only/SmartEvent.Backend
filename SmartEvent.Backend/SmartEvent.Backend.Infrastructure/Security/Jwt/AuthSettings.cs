@@ -1,4 +1,4 @@
-namespace SmartEvent.Backend.Infrastructure.Security;
+namespace SmartEvent.Backend.Infrastructure.Security.Jwt;
 
 public class AuthSettings
 {
