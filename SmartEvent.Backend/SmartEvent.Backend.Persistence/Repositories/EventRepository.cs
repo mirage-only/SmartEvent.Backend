@@ -1,14 +1,12 @@
-﻿using SmartEvent.Backend.Core.Interfaces.IRepositories;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Persistence.Repositories
 {
-    public class EventRepository() : IEventRepository
+    public class EventRepository(ApplicationDbContext dbContext) : IEventRepository
     {
-        public IEnumerable<Event> GetAllEvents()
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<Event> GetAllEvents() => dbContext.Events.AsNoTracking();
 
         public Task<Event?> GetEventById(Guid id)
         {

@@ -1,6 +1,4 @@
-﻿using SmartEvent.Backend.Core.Enums;
-
-namespace SmartEvent.Backend.Application.DTOs.UserDTOs.Responses
+﻿namespace SmartEvent.Backend.Application.DTOs.UserDTOs.Responses
 {
     public class AuthorizeUserResponseDto
     {

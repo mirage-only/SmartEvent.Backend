@@ -25,7 +25,7 @@ public abstract class BaseApiController: ControllerBase
         });
     }
 
-    private string GetTitleForStatus(int resultStatusCode) => resultStatusCode switch
+    private static string GetTitleForStatus(int resultStatusCode) => resultStatusCode switch
     {
         400 => "Bad Request",
         401 => "Unauthorized",
