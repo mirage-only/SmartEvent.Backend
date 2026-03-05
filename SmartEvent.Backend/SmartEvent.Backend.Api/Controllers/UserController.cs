@@ -11,16 +11,16 @@ namespace SmartEvent.Backend.Api.Controllers;
 [Authorize]
 public class UserController(IUserService userService): BaseApiController
 {
-    [HttpPost("register")]
+    [HttpPost("auth/register")]
     [AllowAnonymous]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequestDto requestDto)
     {
-            var response = await userService.RegisterUserAsync(requestDto);
+        var response = await userService.RegisterUserAsync(requestDto);
             
-            return HandleResult(response);
+        return HandleResult(response);
     }
 
-    [HttpPost("login")]
+    [HttpPost("auth/login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginUserRequestDto requestDto)
     {
