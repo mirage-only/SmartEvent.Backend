@@ -10,7 +10,6 @@
       <Folder Include="DTOs\AttendanceDTOs\Requests\" />
       <Folder Include="DTOs\AttendanceDTOs\Responses\" />
       <Folder Include="DTOs\EventDTOs\Requests\" />
-      <Folder Include="DTOs\EventDTOs\Responses\" />
       <Folder Include="DTOs\QrCodeDTOs\Requests\" />
       <Folder Include="DTOs\QrCodeDTOs\Responses\" />
       <Folder Include="DTOs\RegistrationDTOs\Requests\" />
