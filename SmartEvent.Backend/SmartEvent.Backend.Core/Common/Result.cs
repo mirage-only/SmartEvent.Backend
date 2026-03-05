@@ -17,7 +17,7 @@ public class Result<T>
         StatusCode = statusCode;
     }
     
-    public static Result<T> Success(T data) 
+    public static Result<T> Success(T? data) 
         => new (true, data, null, (int)HttpStatusCode.OK);
     public static Result<T> Failure(string errorMessage, HttpStatusCode statusCode) 
         => new (false, default, errorMessage, (int)statusCode);
