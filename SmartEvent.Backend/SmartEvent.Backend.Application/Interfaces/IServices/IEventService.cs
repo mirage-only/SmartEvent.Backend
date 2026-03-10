@@ -7,5 +7,7 @@ namespace SmartEvent.Backend.Application.Interfaces.IServices;
 public interface IEventService
 {
     public Task<Result<PagedResult<GetLightEventDto>>> GetLightEventsWithPaginationAsync(PaginationParams paginationParams);
+    
+    public Task<Result<GetEventDetailsDto>> GetEventDetailsAsync(Guid id);
 
 }
