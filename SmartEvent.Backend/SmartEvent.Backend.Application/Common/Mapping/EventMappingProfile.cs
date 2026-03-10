@@ -9,5 +9,7 @@ public class EventMappingProfile: Profile
     public EventMappingProfile()
     {
         CreateMap<Event, GetLightEventDto>();
+
+        CreateMap<Event, GetEventDetailsDto>();
     }
 }
