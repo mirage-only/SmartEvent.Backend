@@ -18,4 +18,11 @@ public class EventController(IEventService eventService): BaseApiController
         return HandleResult(response);
     }
     
+    [HttpGet("{eventId:guid}")]
+    public async Task<IActionResult> GetEventDetailsById(Guid eventId)
+    {
+        var response = await eventService.GetEventDetailsAsync(eventId);
+        return HandleResult(response);
+    }
+    
 }
