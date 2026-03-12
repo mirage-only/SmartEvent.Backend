@@ -16,8 +16,8 @@ services.AddHttpContextAccessor();
 
 services.AddAuthorizationBuilder()
     .AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"))
-    .AddPolicy("AtLeastTeacher", policy => policy.RequireRole("Teacher", "Admin"))
-    .AddPolicy("AtLeastStudent", policy => policy.RequireRole("Student", "Teacher", "Admin"));
+    .AddPolicy("AtLeastEmployee", policy => policy.RequireRole("Employee", "Admin"))
+    .AddPolicy("AtLeastStudent", policy => policy.RequireRole("Student", "Employee", "Admin"));
 
 services.AddControllers();
 
