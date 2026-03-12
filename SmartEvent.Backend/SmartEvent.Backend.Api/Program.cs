@@ -12,6 +12,8 @@ services
     .AddApplication()
     .AddInfrastructure(configuration);
 
+services.AddHttpContextAccessor();
+
 services.AddAuthorizationBuilder()
     .AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"))
     .AddPolicy("AtLeastTeacher", policy => policy.RequireRole("Teacher", "Admin"))
