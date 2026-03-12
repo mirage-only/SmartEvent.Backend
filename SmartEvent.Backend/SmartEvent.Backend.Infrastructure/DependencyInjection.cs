@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartEvent.Backend.Application.Interfaces.ICommon;
 using SmartEvent.Backend.Application.Interfaces.IServices;
 using SmartEvent.Backend.Application.Services;
 using SmartEvent.Backend.Core.Models;
@@ -18,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<PasswordHasher<User>>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IUserContext, UserContext>();
         
         services.Configure<AuthSettings>(configuration.GetSection("AuthSettings"));
         services.AddAuth(configuration);
