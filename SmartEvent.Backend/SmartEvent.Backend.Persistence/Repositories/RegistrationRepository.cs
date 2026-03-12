@@ -1,9 +1,10 @@
-﻿using SmartEvent.Backend.Core.Interfaces.IRepositories;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Persistence.Repositories
 {
-    public class RegistrationRepository() : IRegistrationRepository
+    public class RegistrationRepository(ApplicationDbContext dbContext) : IRegistrationRepository
     {
         public Task<Registration> AddRegistration(Registration registration)
         {
