@@ -26,8 +26,10 @@ public class EventService(IEventRepository eventRepository, IMapper mapper): IEv
 
     public async Task<Result<GetEventDetailsDto>> GetEventDetailsAsync(Guid id)
     {
+        const string badIdMessage = "ID can't be empty";
+        
         if (id == Guid.Empty) 
-            return Result<GetEventDetailsDto>.Failure("ID can't be empty", HttpStatusCode.BadRequest);
+            return Result<GetEventDetailsDto>.Failure(badIdMessage, HttpStatusCode.BadRequest);
 
         var searchedEvent = await eventRepository.GetEventById(id);
         var result = mapper.Map<GetEventDetailsDto>(searchedEvent);
