@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartEvent.Backend.Application.Common.Models;
+using SmartEvent.Backend.Application.DTOs.EventDTOs.Requests;
 using SmartEvent.Backend.Application.Interfaces.IServices;
+using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Api.Controllers;
 
@@ -18,11 +20,26 @@ public class EventController(IEventService eventService): BaseApiController
         return HandleResult(response);
     }
     
-    [HttpGet("{eventId:guid}")]
-    public async Task<IActionResult> GetEventDetailsById(Guid eventId)
+    [HttpGet("get/{id:guid}")]
+    public async Task<IActionResult> GetEventDetailsById(Guid id)
     {
-        var response = await eventService.GetEventDetailsAsync(eventId);
+        var response = await eventService.GetEventDetailsAsync(id);
         return HandleResult(response);
     }
+
+    /*[HttpPut("updateEvent")]
+    public async Task<IActionResult> UpdateEvent([FromBody] EventUpdateDto @event)
+    {
+        string response = "fe";
+
+        return HandleResult(response);
+    }*/
+    
+    [HttpDelete("delete/{eventId:guid}")]
+    public async Task<IActionResult> DeleteEvent(Guid eventId)
+    {
+        throw new NotImplementedException();
+    }
+    
     
 }
