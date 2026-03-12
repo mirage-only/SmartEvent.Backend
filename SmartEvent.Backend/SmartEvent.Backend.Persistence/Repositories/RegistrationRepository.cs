@@ -12,6 +12,13 @@ namespace SmartEvent.Backend.Persistence.Repositories
             await dbContext.SaveChangesAsync();
             return registration;
         }
+
+        public async Task<Registration?> GetRegistrationByEventIdAndUserId(Guid eventId, Guid userId)
+        {
+            var registration = await dbContext.Registrations
+                .FirstOrDefaultAsync(reg => reg.EventId == eventId && reg.UserId == userId);
+            
+            return registration;
         }
 
         public Task DeleteRegistration(Guid id)
