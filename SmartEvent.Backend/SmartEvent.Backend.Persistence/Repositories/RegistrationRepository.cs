@@ -6,9 +6,12 @@ namespace SmartEvent.Backend.Persistence.Repositories
 {
     public class RegistrationRepository(ApplicationDbContext dbContext) : IRegistrationRepository
     {
-        public Task<Registration> AddRegistration(Registration registration)
+        public async Task<Registration> AddRegistration(Registration registration)
         {
-            throw new NotImplementedException();
+            dbContext.Registrations.Add(registration);
+            await dbContext.SaveChangesAsync();
+            return registration;
+        }
         }
 
         public Task DeleteRegistration(Guid id)
