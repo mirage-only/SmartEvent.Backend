@@ -8,6 +8,7 @@ namespace SmartEvent.Backend.Core.Interfaces.IRepositories
         public IEnumerable<Registration> GetAllRegistrationsByEventId(Guid eventId);
         public Task<Registration?> GetRegistrationById(Guid id);
         public Task<Registration> AddRegistration(Registration registration);
+        public Task<Registration?> GetRegistrationByEventIdAndUserId(Guid eventId, Guid userId);
         public Task<Registration> UpdateRegistration(Registration registration);
         public Task DeleteRegistration(Guid id);
     }
