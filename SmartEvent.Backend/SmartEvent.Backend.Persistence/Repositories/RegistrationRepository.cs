@@ -1,13 +1,24 @@
-﻿using SmartEvent.Backend.Core.Interfaces.IRepositories;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Persistence.Repositories
 {
-    public class RegistrationRepository() : IRegistrationRepository
+    public class RegistrationRepository(ApplicationDbContext dbContext) : IRegistrationRepository
     {
-        public Task<Registration> AddRegistration(Registration registration)
+        public async Task<Registration> AddRegistration(Registration registration)
         {
-            throw new NotImplementedException();
+            dbContext.Registrations.Add(registration);
+            await dbContext.SaveChangesAsync();
+            return registration;
+        }
+
+        public async Task<Registration?> GetRegistrationByEventIdAndUserId(Guid eventId, Guid userId)
+        {
+            var registration = await dbContext.Registrations
+                .FirstOrDefaultAsync(reg => reg.EventId == eventId && reg.UserId == userId);
+            
+            return registration;
         }
 
         public Task DeleteRegistration(Guid id)

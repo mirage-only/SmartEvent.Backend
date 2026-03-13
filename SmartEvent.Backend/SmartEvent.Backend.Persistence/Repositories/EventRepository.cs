@@ -8,10 +8,8 @@ namespace SmartEvent.Backend.Persistence.Repositories
     {
         public IQueryable<Event> GetAllEvents() => dbContext.Events.AsNoTracking();
 
-        public Task<Event?> GetEventById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<Event?> GetEventById(Guid id) => dbContext.Events.AsNoTracking()
+            .FirstOrDefaultAsync(@event => @event.Id == id);
 
         public Task<Event> AddEvent(Event @event)
         {

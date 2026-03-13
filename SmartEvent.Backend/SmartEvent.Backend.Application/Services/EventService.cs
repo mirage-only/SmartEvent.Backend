@@ -1,3 +1,4 @@
+using System.Net;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using SmartEvent.Backend.Application.Common.Extensions;
@@ -21,5 +22,18 @@ public class EventService(IEventRepository eventRepository, IMapper mapper): IEv
             await mappedQuery.ToPagedResultAsync( paginationParams.PageNumber, paginationParams.PageSize);
         
         return Result<PagedResult<GetLightEventDto>>.Success(pagedResult);
+    }
+
+    public async Task<Result<GetEventDetailsDto>> GetEventDetailsAsync(Guid id)
+    {
+        const string badIdMessage = "ID can't be empty";
+        
+        if (id == Guid.Empty) 
+            return Result<GetEventDetailsDto>.Failure(badIdMessage, HttpStatusCode.BadRequest);
+
+        var searchedEvent = await eventRepository.GetEventById(id);
+        var result = mapper.Map<GetEventDetailsDto>(searchedEvent);
+        
+        return Result<GetEventDetailsDto>.Success(result);
     }
 }
