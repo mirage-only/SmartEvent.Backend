@@ -9,7 +9,6 @@ public class GetEventDetailsDto
     public string Description { get; set; } = Empty;
     public string ImageUrl { get; set; } = Empty;
     public DateTime StartTime { get; set; }
-    public double Longitude { get; set; }
-    public double Latitude { get; set; }
+    public LocationDto Location { get; set; } = new LocationDto();
     public Guid CreatorId { get; set; }
 }
