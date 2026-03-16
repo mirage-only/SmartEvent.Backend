@@ -13,6 +13,7 @@ namespace SmartEvent.Backend.Core.Models
         public DateTime StartTime {  get; set; } = DateTime.UtcNow;
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         public Guid CreatorId { get; set; }
         public User? Creator { get; set; }
