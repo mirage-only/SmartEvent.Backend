@@ -14,6 +14,7 @@ namespace SmartEvent.Backend.Core.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public string Address { get; set; } = string.Empty;
+        public string Room { get; set; } = string.Empty;
 
         public Guid CreatorId { get; set; }
         public User? Creator { get; set; }

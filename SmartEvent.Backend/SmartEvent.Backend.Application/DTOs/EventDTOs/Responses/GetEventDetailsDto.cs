@@ -10,5 +10,6 @@ public class GetEventDetailsDto
     public string ImageUrl { get; set; } = Empty;
     public DateTime StartTime { get; set; }
     public LocationDto Location { get; set; } = new LocationDto();
+    public string Room { get; set; } = string.Empty;
     public Guid CreatorId { get; set; }
 }
