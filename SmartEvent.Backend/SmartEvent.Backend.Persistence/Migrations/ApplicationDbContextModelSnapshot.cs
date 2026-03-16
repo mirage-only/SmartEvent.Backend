@@ -92,6 +92,10 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<long>("QrCodeExpirationTime")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Room")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 

@@ -12,7 +12,7 @@ using SmartEvent.Backend.Persistence;
 namespace SmartEvent.Backend.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260316104828_Initial")]
+    [Migration("20260316194718_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -94,6 +94,10 @@ namespace SmartEvent.Backend.Persistence.Migrations
 
                     b.Property<long>("QrCodeExpirationTime")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Room")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
