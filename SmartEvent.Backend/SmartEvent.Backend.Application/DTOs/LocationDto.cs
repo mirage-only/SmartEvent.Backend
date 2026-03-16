@@ -1,4 +1,4 @@
-namespace SmartEvent.Backend.Application.DTOs.EventDTOs.Responses;
+namespace SmartEvent.Backend.Application.DTOs;
 
 public class LocationDto
 {
