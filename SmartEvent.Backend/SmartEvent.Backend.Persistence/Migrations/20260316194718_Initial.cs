@@ -42,6 +42,8 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Longitude = table.Column<double>(type: "float", nullable: false),
                     Latitude = table.Column<double>(type: "float", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Room = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
