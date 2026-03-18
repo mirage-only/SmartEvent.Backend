@@ -74,7 +74,9 @@ public class NominatimService(IHttpClientFactory httpClientFactory, IMemoryCache
                         double.Parse(root.GetProperty("lon").GetString()!, CultureInfo.InvariantCulture),
             Address = root.GetProperty("display_name").GetString() ?? "Address not found!"
         };
-            
+         
+        if(result.Address == "Address not found!") return Result<LocationDto>.Failure("Address not found!", HttpStatusCode.NotFound);
+        
         cache.Set(cacheKey, result, TimeSpan.FromDays(1));
             
         return Result<LocationDto>.Success(result);

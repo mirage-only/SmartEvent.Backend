@@ -1,5 +1,6 @@
 using AutoMapper;
 using SmartEvent.Backend.Application.DTOs;
+using SmartEvent.Backend.Application.DTOs.EventDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.EventDTOs.Responses;
 using SmartEvent.Backend.Core.Models;
 
@@ -20,5 +21,7 @@ public class EventMappingProfile: Profile
                         Longitude = source.Longitude,
                         Address = source.Address
                     }));
+        
+        CreateMap<AddEventDto, Event>();
     }
 }
