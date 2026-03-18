@@ -3,6 +3,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using SmartEvent.Backend.Application.Common.Extensions;
 using SmartEvent.Backend.Application.Common.Models;
+using SmartEvent.Backend.Application.Common.Validators;
 using SmartEvent.Backend.Application.DTOs.EventDTOs.Requests;
 using SmartEvent.Backend.Application.DTOs.EventDTOs.Responses;
 using SmartEvent.Backend.Application.Interfaces.ICommon;
@@ -10,6 +11,7 @@ using SmartEvent.Backend.Application.Interfaces.IServices;
 using SmartEvent.Backend.Core.Common;
 using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
+using ValidationException = SmartEvent.Backend.Core.Exceptions.ValidationException;
 
 namespace SmartEvent.Backend.Application.Services;
 
@@ -46,6 +48,13 @@ public class EventService(IEventRepository eventRepository, IMapper mapper, IUse
         
         if (addEventDto.QrCodeExpirationTime == 0)
             addEventDto.QrCodeExpirationTime = defaultExpirationTime;
+
+        var validator = new AddEventDtoValidator();
+        var  validationResult = await validator.ValidateAsync(addEventDto);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.ToDictionary());
+        }
 
         var newEvent = mapper.Map<Event>(addEventDto);
         var creatorId = userContext.UserId;
