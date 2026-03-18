@@ -27,6 +27,6 @@ public class RegistrationConfiguration : IEntityTypeConfiguration<Registration>
             .HasOne(registration => registration.Event)
             .WithMany(@event => @event.Registrations)
             .HasForeignKey(registration => registration.EventId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
