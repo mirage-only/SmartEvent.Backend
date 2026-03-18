@@ -10,7 +10,7 @@ namespace SmartEvent.Backend.Api.Controllers;
 public class LocationController(IGeoInfoService geoInfoService) : BaseApiController
 {
     [HttpGet("getEventLocationByAddress/{address}")]
-    [AllowAnonymous]
+    [Authorize(Policy = "AtLeastEmployee")]
     public async Task<IActionResult> GetEventLocationByAddress(string address)
     {
         var response =

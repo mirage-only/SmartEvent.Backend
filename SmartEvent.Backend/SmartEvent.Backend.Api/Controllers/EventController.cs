@@ -28,6 +28,7 @@ public class EventController(IEventService eventService): BaseApiController
     }
 
     [HttpPost("add")]
+    [Authorize(Policy = "AtLeastEmployee")]
     public async Task<IActionResult> AddEventAsync(AddEventDto addEventDto)
     {
         var response = await eventService.AddEventAsync(addEventDto);
