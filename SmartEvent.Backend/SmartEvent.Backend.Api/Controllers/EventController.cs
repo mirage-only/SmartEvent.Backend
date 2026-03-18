@@ -27,13 +27,13 @@ public class EventController(IEventService eventService): BaseApiController
         return HandleResult(response);
     }
 
-    /*[HttpPut("updateEvent")]
-    public async Task<IActionResult> UpdateEvent([FromBody] EventUpdateDto @event)
+    [HttpPost("add")]
+    public async Task<IActionResult> AddEventAsync(AddEventDto addEventDto)
     {
-        string response = "fe";
-
+        var response = await eventService.AddEventAsync(addEventDto);
+        
         return HandleResult(response);
-    }*/
+    }
     
     [HttpDelete("delete/{eventId:guid}")]
     public async Task<IActionResult> DeleteEvent(Guid eventId)
