@@ -18,6 +18,11 @@ public class AttendanceConfiguration: IEntityTypeConfiguration<Attendance>
             .WithMany(user => user.Attendances)
             .HasForeignKey(attendance => attendance.UserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasOne(attendance => attendance.ConfirmedByOrganizer)
+            .WithMany()
+            .HasForeignKey(attendance => attendance.ConfirmedByOrganizerId);
         
         builder
             .HasOne(attendance => attendance.Event)
