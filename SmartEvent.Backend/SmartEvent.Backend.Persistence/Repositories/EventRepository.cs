@@ -8,8 +8,16 @@ namespace SmartEvent.Backend.Persistence.Repositories
     {
         public IQueryable<Event> GetAllEvents() => dbContext.Events.AsNoTracking();
 
-        public Task<Event?> GetEventById(Guid id) => dbContext.Events.AsNoTracking()
-            .FirstOrDefaultAsync(@event => @event.Id == id);
+        public async Task<Event?> GetEventById(Guid id) => 
+            await dbContext.Events
+                .AsNoTracking()
+                .FirstOrDefaultAsync(@event => @event.Id == id);
+
+        public async Task<Event?> GetEventWithQrCodeByIdAsync(Guid id) => 
+            await dbContext.Events
+                .AsNoTracking()
+                .Include(@event => @event.PastQrCodes)
+                .FirstOrDefaultAsync(@event => @event.Id == id);
 
         public async Task<Event> AddEvent(Event @event)
         {
