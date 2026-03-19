@@ -19,6 +19,7 @@ public class EventConfiguration: IEntityTypeConfiguration<Event>
         builder.Property(@event => @event.Address).IsRequired();
         builder.Property(@event => @event.Room).IsRequired();
         builder.Property(@event => @event.QrCodeExpirationTime).IsRequired();
+        builder.Property(@event => @event.IsQrVerificationActive).IsRequired();
         
         builder.Ignore(@event => @event.CurrentQrCode);
 
