@@ -16,6 +16,9 @@ namespace SmartEvent.Backend.Core.Models
 
         public AttendanceMethod Method { get; set; }
         
+        public Guid? ConfirmedByOrganizerId { get; set; }
+        public User? ConfirmedByOrganizer { get; set; }
+        
         public Guid? QrCodeId { get; set; }
         public QrCode? QrCode { get; set; }
 
