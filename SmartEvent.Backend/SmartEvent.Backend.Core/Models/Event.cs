@@ -26,7 +26,7 @@ namespace SmartEvent.Backend.Core.Models
         
         public bool IsQrVerificationActive { get; set; } = false;
         public QrCode? CurrentQrCode => PastQrCodes
-            .Where(qrCode => qrCode.Status == Status.Active && qrCode.ExpiredAt > DateTime.UtcNow)
+            .Where(qrCode => qrCode.Status == Status.Active && qrCode.ExpiresAt > DateTime.UtcNow)
             .OrderByDescending(qrCode => qrCode.CreatedAt)
             .FirstOrDefault();
         public uint QrCodeExpirationTime { get; set; } = DefaultExpirationTime;

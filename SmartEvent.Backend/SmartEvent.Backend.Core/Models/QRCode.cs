@@ -11,7 +11,7 @@ namespace SmartEvent.Backend.Core.Models
         public Status Status { get; set; }
 
         public DateTime CreatedAt { get; set; }
-        public DateTime ExpiredAt { get; set; }
+        public DateTime ExpiresAt { get; set; }
 
         public Guid EventId { get; set; }
         public Event? Event { get; set; }
