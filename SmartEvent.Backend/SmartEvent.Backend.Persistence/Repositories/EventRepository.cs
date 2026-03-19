@@ -19,6 +19,15 @@ namespace SmartEvent.Backend.Persistence.Repositories
                 .Include(@event => @event.PastQrCodes)
                 .FirstOrDefaultAsync(@event => @event.Id == id);
 
+        public async Task<Event?> GetEventForAttendanceAsync(Guid id) => 
+            await dbContext.Events
+                .AsNoTracking()
+                .Include(@event => @event.Registrations)
+                .Include(@event => @event.Attendances)
+                .Include(@event => @event.PastQrCodes)
+                .Include(@event => @event.Organizers)
+                .FirstOrDefaultAsync(@event => @event.Id == id);
+
         public async Task<Event> AddEvent(Event @event)
         {
             await  dbContext.Events.AddAsync(@event);
