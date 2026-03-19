@@ -15,6 +15,9 @@ namespace SmartEvent.Backend.Core.Models
         public DateTime ConfirmedAt { get; set; } = DateTime.Now;
 
         public AttendanceMethod Method { get; set; }
+        
+        public Guid? QrCodeId { get; set; }
+        public QrCode? QrCode { get; set; }
 
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
