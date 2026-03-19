@@ -19,6 +19,9 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         builder.Property(user => user.PasswordHash).IsRequired();
         builder.Property(user => user.UserRole).IsRequired();
         builder.Property(user => user.IsActive).IsRequired();
+        builder.Property(user => user.IsDeleted).IsRequired();
+        
+        builder.HasQueryFilter(user => !user.IsDeleted);
 
         builder
             .HasMany(user => user.OrganizedEvents)

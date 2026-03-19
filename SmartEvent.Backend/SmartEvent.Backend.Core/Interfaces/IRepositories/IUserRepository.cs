@@ -8,7 +8,6 @@ namespace SmartEvent.Backend.Core.Interfaces.IRepositories
         public Task<User?> GetUserById(Guid id);
         public Task<User?> GetUserByEmail(string email);
         public Task<User> AddUser(User user);
-        public Task<User> UpdateUser(User user);
-        public Task DeleteUser(Guid id);
+        public Task UpdateUser(User user);
     }
 }

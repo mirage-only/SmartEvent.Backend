@@ -13,14 +13,6 @@ namespace SmartEvent.Backend.Persistence.Repositories
             return user;
         }
 
-        public async Task DeleteUser(Guid id)
-        {
-            var user = await dbContext.Users.FindAsync(id);
-            if (user == null) throw new Exception("User is not found");
-            dbContext.Users.Remove(user);
-            await dbContext.SaveChangesAsync();
-        }
-
         public IQueryable<User> GetAllUsers() => dbContext.Users.AsNoTracking();
 
         public async Task<User?> GetUserByEmail(string email)
@@ -33,11 +25,10 @@ namespace SmartEvent.Backend.Persistence.Repositories
             return await dbContext.Users.FindAsync(id);
         }
 
-        public async Task<User> UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
             dbContext.Users.Update(user);
             await dbContext.SaveChangesAsync();
-            return user;
         }
     }
 }

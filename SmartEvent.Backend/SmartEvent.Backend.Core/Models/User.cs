@@ -21,6 +21,8 @@ namespace SmartEvent.Backend.Core.Models
         public DateTime UpdatedAt { get; set; }
 
         public bool IsActive { get; set; } = true;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedAt { get; set; }
 
         public ICollection<EventOrganizer> OrganizedEvents { get; set; } = [];
         public ICollection<Registration> Registrations { get; set; } = [];
