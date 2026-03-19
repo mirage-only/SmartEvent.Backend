@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\AttendanceDTOs\Requests\" />
       <Folder Include="DTOs\AttendanceDTOs\Responses\" />
       <Folder Include="DTOs\QrCodeDTOs\Requests\" />
       <Folder Include="DTOs\RegistrationDTOs\Requests\" />
