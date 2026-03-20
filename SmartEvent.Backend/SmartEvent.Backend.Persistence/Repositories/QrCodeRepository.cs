@@ -3,11 +3,13 @@ using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Persistence.Repositories
 {
-    public class QrCodeRepository() : IQrCodeRepository
+    public class QrCodeRepository(ApplicationDbContext dbContext): IQrCodeRepository
     {
-        public Task<QrCode> AddQrCode(QrCode qrCode)
+        public async Task<bool> AddQrCodeAsync(QrCode qrCode)
         {
-            throw new NotImplementedException();
+            await dbContext.QrCodes.AddAsync(qrCode);
+            await dbContext.SaveChangesAsync();
+            return true;
         }
 
         public Task DeleteQrCode(Guid id)

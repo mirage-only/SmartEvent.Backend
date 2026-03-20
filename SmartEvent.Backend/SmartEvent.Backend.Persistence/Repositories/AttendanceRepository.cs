@@ -3,41 +3,13 @@ using SmartEvent.Backend.Core.Models;
 
 namespace SmartEvent.Backend.Persistence.Repositories
 {
-    public class AttendanceRepository() : IAttendanceRepository
+    public class AttendanceRepository(ApplicationDbContext dbContext) : IAttendanceRepository
     {
-        public IEnumerable<Attendance> GetAllAttendances()
+        public async Task<bool> AddAttendanceAsync(Attendance attendance)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Attendance> GetAllAttendancesByUserId(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Attendance> GetAllAttendancesByEventId(Guid eventId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Attendance?> GetAttendanceById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Attendance> AddAttendance(Attendance attendance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Attendance> UpdateAttendance(Attendance attendance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAttendance(Guid id)
-        {
-            throw new NotImplementedException();
+            await dbContext.Attendances.AddAsync(attendance);
+            await  dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

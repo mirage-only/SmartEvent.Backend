@@ -14,7 +14,7 @@ public class LocationController(IGeoInfoService geoInfoService) : BaseApiControl
     public async Task<IActionResult> GetEventLocationByAddress(string address)
     {
         var response =
-            await geoInfoService.GetLocationByAddressAsync(address);
+            await geoInfoService.GetEventLocationByAddressAsync(address);
         
         return HandleResult(response);
     }

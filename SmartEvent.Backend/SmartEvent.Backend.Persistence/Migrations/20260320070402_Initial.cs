@@ -24,7 +24,9 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     UserRole = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,6 +49,7 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsQrVerificationActive = table.Column<bool>(type: "bit", nullable: false),
                     QrCodeExpirationTime = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -58,35 +61,6 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Attendances",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConfirmedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Method = table.Column<int>(type: "int", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: true),
-                    Latitude = table.Column<double>(type: "float", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attendances", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Attendances_Events_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Attendances_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -122,7 +96,7 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     TokenValue = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -153,7 +127,7 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Registrations_Users_UserId",
                         column: x => x.UserId,
@@ -161,6 +135,57 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Attendances",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ConfirmedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Method = table.Column<int>(type: "int", nullable: false),
+                    ConfirmedByOrganizerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    QrCodeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Longitude = table.Column<double>(type: "float", nullable: true),
+                    Latitude = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Attendances_Events_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Attendances_QrCodes_QrCodeId",
+                        column: x => x.QrCodeId,
+                        principalTable: "QrCodes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Attendances_Users_ConfirmedByOrganizerId",
+                        column: x => x.ConfirmedByOrganizerId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Attendances_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendances_ConfirmedByOrganizerId",
+                table: "Attendances",
+                column: "ConfirmedByOrganizerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendances_QrCodeId",
+                table: "Attendances",
+                column: "QrCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendances_UserId",
@@ -220,10 +245,10 @@ namespace SmartEvent.Backend.Persistence.Migrations
                 name: "EventOrganizers");
 
             migrationBuilder.DropTable(
-                name: "QrCodes");
+                name: "Registrations");
 
             migrationBuilder.DropTable(
-                name: "Registrations");
+                name: "QrCodes");
 
             migrationBuilder.DropTable(
                 name: "Events");
