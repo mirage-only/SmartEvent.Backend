@@ -115,7 +115,7 @@ public class AttendanceService(IAttendanceRepository attendanceRepository, IEven
             Id = Guid.NewGuid(),
             UserId = userId,
             EventId = eventId,
-            Method = AttendanceMethod.Qr,
+            Method = method,
             ConfirmedByOrganizerId = organizerId,
             QrCodeId = qrCodeId,
             Latitude = userLatitude,
