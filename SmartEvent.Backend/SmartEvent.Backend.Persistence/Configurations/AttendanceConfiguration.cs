@@ -13,6 +13,8 @@ public class AttendanceConfiguration: IEntityTypeConfiguration<Attendance>
         builder.Property(attendance => attendance.ConfirmedAt).IsRequired();
         builder.Property(attendance => attendance.Method).IsRequired();
         
+        builder.HasQueryFilter(attendance => !attendance.User!.IsDeleted);
+        
         builder
             .HasOne(attendance => attendance.User)
             .WithMany(user => user.Attendances)
