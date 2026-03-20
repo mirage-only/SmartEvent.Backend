@@ -31,6 +31,9 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<DateTime>("ConfirmedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("ConfirmedByOrganizerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
@@ -50,6 +53,8 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConfirmedByOrganizerId");
 
                     b.HasIndex("QrCodeId");
 
@@ -149,7 +154,7 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ExpiredAt")
+                    b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -251,6 +256,10 @@ namespace SmartEvent.Backend.Persistence.Migrations
 
             modelBuilder.Entity("SmartEvent.Backend.Core.Models.Attendance", b =>
                 {
+                    b.HasOne("SmartEvent.Backend.Core.Models.User", "ConfirmedByOrganizer")
+                        .WithMany()
+                        .HasForeignKey("ConfirmedByOrganizerId");
+
                     b.HasOne("SmartEvent.Backend.Core.Models.QrCode", "QrCode")
                         .WithMany()
                         .HasForeignKey("QrCodeId");
@@ -266,6 +275,8 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("ConfirmedByOrganizer");
 
                     b.Navigation("Event");
 
