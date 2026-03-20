@@ -44,7 +44,7 @@ public class QrService(IQrCodeRepository qrCodeRepository, IEventRepository even
         if (!dbResponse)
             return Result<CurrentQrCodeDto>.Failure(cantSaveQrCodeMessage, HttpStatusCode.InternalServerError);
 
-        var response = mapper.Map<CurrentQrCodeDto>(dbResponse);
+        var response = mapper.Map<CurrentQrCodeDto>(newQr);
         return Result<CurrentQrCodeDto>.Success(response);
     }
 }
