@@ -91,40 +91,22 @@ namespace SmartEvent.Backend.Application.Services
 
             return Result<PagedResult<GetUserDto>>.Success(pagedResult);
         }
-        
-        public Task DeleteUserAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<UserDto?> GetUserByEmailAsync(string? email)
+        public async Task<Result<bool>> DeleteUserSoftAsync(Guid? id)
         {
-            throw new NotImplementedException();
-        }
+            if (id == null || id == Guid.Empty)
+                return Result<bool>.Failure("User id can't be null or empty", HttpStatusCode.BadRequest);
+            
+            var user = await userRepository.GetUserById(id.Value);
 
-        public Task<UserDto?> GetUserByIdAsync(Guid? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UpdateUserResponseDto> UpdateUserAsync(UpdateUserRequestDto request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UserExistsByEmailAsync(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UserExistsByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public Task<AssignRoleResponseDto> AssignRoleAsync(AssignRoleRequestDto request)
-        {
-            throw new NotImplementedException();
+            if (user == null)
+                return Result<bool>.Failure($"User with id={id} not found", HttpStatusCode.NotFound);
+            
+            user.IsDeleted = true;
+            user.DeletedAt = DateTime.Now;
+            
+            await userRepository.UpdateUser(user);
+            return Result<bool>.Success(true);
         }
     }
 }

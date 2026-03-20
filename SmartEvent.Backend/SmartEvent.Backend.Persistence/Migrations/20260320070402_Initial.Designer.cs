@@ -12,7 +12,7 @@ using SmartEvent.Backend.Persistence;
 namespace SmartEvent.Backend.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260224125708_Initial")]
+    [Migration("20260320070402_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -34,6 +34,9 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<DateTime>("ConfirmedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("ConfirmedByOrganizerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
@@ -46,10 +49,17 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<int>("Method")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("QrCodeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConfirmedByOrganizerId");
+
+                    b.HasIndex("QrCodeId");
 
                     b.HasIndex("UserId");
 
@@ -61,6 +71,10 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -77,6 +91,9 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsQrVerificationActive")
+                        .HasColumnType("bit");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
 
@@ -90,6 +107,10 @@ namespace SmartEvent.Backend.Persistence.Migrations
 
                     b.Property<long>("QrCodeExpirationTime")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Room")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
@@ -136,7 +157,7 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ExpiredAt")
+                    b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -189,6 +210,9 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -200,6 +224,9 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -232,6 +259,14 @@ namespace SmartEvent.Backend.Persistence.Migrations
 
             modelBuilder.Entity("SmartEvent.Backend.Core.Models.Attendance", b =>
                 {
+                    b.HasOne("SmartEvent.Backend.Core.Models.User", "ConfirmedByOrganizer")
+                        .WithMany()
+                        .HasForeignKey("ConfirmedByOrganizerId");
+
+                    b.HasOne("SmartEvent.Backend.Core.Models.QrCode", "QrCode")
+                        .WithMany()
+                        .HasForeignKey("QrCodeId");
+
                     b.HasOne("SmartEvent.Backend.Core.Models.Event", "Event")
                         .WithMany("Attendances")
                         .HasForeignKey("UserId")
@@ -244,7 +279,11 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("ConfirmedByOrganizer");
+
                     b.Navigation("Event");
+
+                    b.Navigation("QrCode");
 
                     b.Navigation("User");
                 });
@@ -295,7 +334,7 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.HasOne("SmartEvent.Backend.Core.Models.Event", "Event")
                         .WithMany("Registrations")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SmartEvent.Backend.Core.Models.User", "User")

@@ -40,4 +40,17 @@ public class RegistrationService(IRegistrationRepository registrationRepository,
 
         return Result<Guid>.Success(result.Id);
     }
+
+    public async Task<Result<Guid>> IsRegistrationExistAsync(Guid eventId)
+    {
+        const string idCantBeNullMessage = "Id can't be null";
+        
+        var userId = userContext.UserId;
+        if (userId == Guid.Empty) return Result<Guid>.Failure(idCantBeNullMessage, HttpStatusCode.BadRequest);
+        if (eventId == Guid.Empty) return Result<Guid>.Failure(idCantBeNullMessage, HttpStatusCode.BadRequest);
+
+        var registration = await registrationRepository.GetRegistrationByEventIdAndUserId(eventId, userId);
+        if (registration == null) return Result<Guid>.Success(Guid.Empty);
+        return Result<Guid>.Success(registration.Id);
+    }
 }

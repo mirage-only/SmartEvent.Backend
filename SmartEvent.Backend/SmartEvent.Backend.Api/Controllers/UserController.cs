@@ -37,4 +37,13 @@ public class UserController(IUserService userService): BaseApiController
         
         return HandleResult(response);
     }
+
+    [HttpDelete("deleteUserSoft")]
+    [Authorize(Policy = "AdminOnly")]
+    public async Task<IActionResult> DeleteUserSoftAsync([FromBody] Guid? id)
+    {
+        var result = await userService.DeleteUserSoftAsync(id);
+        
+        return HandleResult(result);
+    }
 }

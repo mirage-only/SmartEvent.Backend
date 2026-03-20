@@ -13,6 +13,9 @@ public static class DependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IEventService, EventService>();
         services.AddScoped<IRegistrationService,  RegistrationService>();
+        services.AddScoped<IGeoInfoService, GeoInfoService>();
+        services.AddScoped<IAttendanceService, AttendanceService>();
+        services.AddScoped<IQrService, QrService>();
         
         services.AddAutoMapper(typeof(DependencyInjection).Assembly);
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);

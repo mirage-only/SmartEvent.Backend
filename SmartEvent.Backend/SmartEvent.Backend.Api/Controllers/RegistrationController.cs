@@ -16,4 +16,11 @@ public class RegistrationController(IRegistrationService registrationService): B
         
         return HandleResult(response);
     }
+
+    [HttpGet("isRegistrationExist/{eventId:guid}")]
+    public async Task<IActionResult> IsRegistrationExist([FromRoute] Guid eventId)
+    {
+        var response = await registrationService.IsRegistrationExistAsync(eventId);
+        return HandleResult(response);
+    }
 }
