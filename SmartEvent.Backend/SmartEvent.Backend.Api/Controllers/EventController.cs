@@ -20,6 +20,14 @@ public class EventController(IEventService eventService): BaseApiController
         return HandleResult(response);
     }
     
+    [HttpPost("getLightEventsWhereUserRegister")]
+    public async Task<IActionResult> GetLightEventsWhereUserRegister()
+    {
+        var response = await eventService.GetLightEventsWhereUserRegisterAsync();
+
+        return HandleResult(response);
+    }
+    
     [HttpGet("get/{id:guid}")]
     public async Task<IActionResult> GetEventDetailsById(Guid id)
     {

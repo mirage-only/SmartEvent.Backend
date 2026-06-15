@@ -29,6 +29,19 @@ public class EventService(IEventRepository eventRepository, IMapper mapper, IUse
         return Result<PagedResult<GetLightEventDto>>.Success(pagedResult);
     }
 
+    public async Task<Result<List<GetLightEventDto>>> GetLightEventsWhereUserRegisterAsync()
+    {
+        var userId = userContext.UserId;
+        
+        if (userId == Guid.Empty)
+            throw new ValidationException("userId", "Invalid user id");
+        
+        var events = await eventRepository.GetEventsByUserIdAsync(userId);
+        var result = mapper.Map<List<GetLightEventDto>>(events);
+        
+        return Result<List<GetLightEventDto>>.Success(result);
+    }
+
     public async Task<Result<GetEventDetailsDto>> GetEventDetailsAsync(Guid id)
     {
         const string badIdMessage = "ID can't be empty";

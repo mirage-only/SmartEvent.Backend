@@ -6,6 +6,7 @@ namespace SmartEvent.Backend.Core.Interfaces.IRepositories
     {
         public IQueryable<Event> GetAllEvents();
         public Task<Event?> GetEventById(Guid id);
+        public Task<List<Event>> GetEventsByUserIdAsync(Guid userId);
         public Task<Event?> GetEventWithQrCodeByIdAsync(Guid id);
         public Task<Event?> GetEventForAttendanceAsync(Guid id);
         public Task<Event> AddEvent(Event @event);

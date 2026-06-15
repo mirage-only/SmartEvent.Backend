@@ -9,8 +9,9 @@ public interface IEventService
 {
     public Task<Result<PagedResult<GetLightEventDto>>> GetLightEventsWithPaginationAsync(PaginationParams paginationParams);
     
+    public Task<Result<List<GetLightEventDto>>> GetLightEventsWhereUserRegisterAsync();
+    
     public Task<Result<GetEventDetailsDto>> GetEventDetailsAsync(Guid id);
     
     public Task<Result<Guid>>  AddEventAsync(AddEventDto addEventDto);
-
 }

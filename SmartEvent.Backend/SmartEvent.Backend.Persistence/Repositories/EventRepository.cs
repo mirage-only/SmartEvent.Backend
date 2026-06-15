@@ -13,6 +13,14 @@ namespace SmartEvent.Backend.Persistence.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(@event => @event.Id == id);
 
+        public async Task<List<Event>> GetEventsByUserIdAsync(Guid userId)
+        {
+            return await dbContext.Events
+                .AsNoTracking()
+                .Where(e => e.Registrations.Any(r => r.UserId == userId))
+                .ToListAsync();
+        }
+
         public async Task<Event?> GetEventWithQrCodeByIdAsync(Guid id) => 
             await dbContext.Events
                 .AsNoTracking()
