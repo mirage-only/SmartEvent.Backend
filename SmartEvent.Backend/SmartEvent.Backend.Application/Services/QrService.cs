@@ -32,7 +32,8 @@ public class QrService(IQrCodeRepository qrCodeRepository, IEventRepository even
             EventId = eventWithQrCodes.Id,
             TokenValue = Guid.NewGuid().ToString(),
             Status = Status.Active,
-            ExpiresAt = DateTime.UtcNow.AddSeconds(eventWithQrCodes.QrCodeExpirationTime)
+            ExpiresAt = DateTime.UtcNow.AddSeconds(eventWithQrCodes.QrCodeExpirationTime),
+            CreatedAt = DateTime.UtcNow
         };
         var dbResponse = await qrCodeRepository.AddQrCodeAsync(newQr);
         if (!dbResponse) return Result<CurrentQrCodeDto>.Failure(cantSaveQrCodeMessage, HttpStatusCode.InternalServerError);

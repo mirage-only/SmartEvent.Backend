@@ -19,7 +19,7 @@ namespace SmartEvent.Backend.Core.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         private const uint DefaultExpirationTime = 30; 
-        public bool IsQrVerificationActive { get; set; } = false;
+        public bool IsQrVerificationActive  => DateTime.UtcNow >= StartTime;
         public QrCode? CurrentQrCode => PastQrCodes
             .Where(qrCode => qrCode.Status == Status.Active && qrCode.ExpiresAt > DateTime.UtcNow)
             .OrderByDescending(qrCode => qrCode.CreatedAt)
