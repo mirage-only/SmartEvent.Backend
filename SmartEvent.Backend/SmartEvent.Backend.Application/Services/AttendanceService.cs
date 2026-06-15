@@ -60,7 +60,7 @@ public class AttendanceService(IAttendanceRepository attendanceRepository, IEven
             eventEntity.Latitude, eventEntity.Longitude, 
             qrAttendanceDto.UserLatitude.Value, qrAttendanceDto.UserLongitude.Value);
 
-        if (distance > 30)
+        if (distance > 100)
             return Result<Guid>.Failure(UserSoFarMessage, HttpStatusCode.Forbidden);
         
         return await CreateAndSaveAttendanceAsync(
