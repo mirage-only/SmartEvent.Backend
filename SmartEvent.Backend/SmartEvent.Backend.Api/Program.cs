@@ -24,7 +24,7 @@ services.AddCors(options =>
             else
             {
                 policy
-                    .AllowAnyOrigin()
+                    .WithOrigins("https://smartevent-web.vercel.app")
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }
