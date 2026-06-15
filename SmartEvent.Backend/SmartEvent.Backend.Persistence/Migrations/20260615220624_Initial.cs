@@ -49,7 +49,6 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsQrVerificationActive = table.Column<bool>(type: "bit", nullable: false),
                     QrCodeExpirationTime = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

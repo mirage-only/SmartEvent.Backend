@@ -12,7 +12,7 @@ using SmartEvent.Backend.Persistence;
 namespace SmartEvent.Backend.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260320070402_Initial")]
+    [Migration("20260615220624_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -90,9 +90,6 @@ namespace SmartEvent.Backend.Persistence.Migrations
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsQrVerificationActive")
-                        .HasColumnType("bit");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
