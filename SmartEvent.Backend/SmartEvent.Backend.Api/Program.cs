@@ -7,6 +7,30 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services = builder.Services;
 
+const string specialCorsPolicy = "corsPolicy";
+
+services.AddCors(options =>
+{
+    options.AddPolicy(name: specialCorsPolicy,
+        policy =>
+        {
+            if (builder.Environment.IsDevelopment())
+            {
+                policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }
+            else
+            {
+                policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }
+        });
+});
+
 services
     .AddPersistence(configuration)
     .AddApplication()
