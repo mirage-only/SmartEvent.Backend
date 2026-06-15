@@ -6,7 +6,6 @@ namespace SmartEvent.Backend.Core.Models
     public class Event: IAuditableModel
     {
         public Guid Id { get; set; } =  Guid.NewGuid();
-
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
@@ -15,15 +14,11 @@ namespace SmartEvent.Backend.Core.Models
         public double Latitude { get; set; }
         public string Address { get; set; } = string.Empty;
         public string Room { get; set; } = string.Empty;
-
         public Guid CreatorId { get; set; }
         public User? Creator { get; set; }
-        
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
         private const uint DefaultExpirationTime = 30; 
-        
         public bool IsQrVerificationActive { get; set; } = false;
         public QrCode? CurrentQrCode => PastQrCodes
             .Where(qrCode => qrCode.Status == Status.Active && qrCode.ExpiresAt > DateTime.UtcNow)

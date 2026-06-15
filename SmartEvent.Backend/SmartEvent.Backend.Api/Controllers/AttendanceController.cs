@@ -10,16 +10,16 @@ namespace SmartEvent.Backend.Api.Controllers;
 [Authorize]
 public class AttendanceController(IAttendanceService attendanceService): BaseApiController
 {
-    [HttpPost]
+    [HttpPost("AttendManually")]
     [Authorize(Policy = "AtLeastEmployee")]
-    public async Task<IActionResult> AttendByOrganizer([FromBody] ManualAttendanceDto manualAttendanceDto)
+    public async Task<IActionResult> AttendManually([FromBody] ManualAttendanceDto manualAttendanceDto)
     {
         var response = await attendanceService.ConfirmManually(manualAttendanceDto);
 
         return HandleResult(response);
     }
     
-    [HttpPost]
+    [HttpPost("AttendByOrganizer")]
     [Authorize(Policy = "AtLeastStudent")]
     public async Task<IActionResult> AttendByOrganizer([FromBody] QrAttendanceDto qrAttendanceDto)
     {
