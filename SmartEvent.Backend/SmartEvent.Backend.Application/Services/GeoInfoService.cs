@@ -24,24 +24,19 @@ public class GeoInfoService(ILocationService locationService): IGeoInfoService
     public double CalculateDistanceDifference(double eventLat, double eventLong, double userLat, double userLong)
     {
         const int earthRadius = 6371000;
-        
         var eventLatRad = ToRadians(eventLat);
         var eventLongRad = ToRadians(eventLong);
         var userLatRad = ToRadians(userLat);
         var userLongRad = ToRadians(userLong);
-
         var sinusLatitudesInSecondDegree = Math.Pow(Math.Sin((eventLatRad - userLatRad) / 2), 2);
         var sinusLongitudesInSecondDegree = Math.Pow(Math.Sin((eventLongRad - userLongRad) / 2), 2);
-            
         var haversine = sinusLatitudesInSecondDegree + Math.Cos(eventLatRad) * Math.Cos(userLatRad) * sinusLongitudesInSecondDegree;
         var angularDistance = 2 * Math.Atan2(Math.Sqrt(haversine), Math.Sqrt(1 - haversine));
         var distance = earthRadius * angularDistance;
-
         if (distance < 0)
         {
             distance = -distance;
         }
-        
         return distance;
     }
     

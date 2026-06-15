@@ -6,6 +6,7 @@ COPY ["SmartEvent.Backend.Api/SmartEvent.Backend.Api.csproj", "SmartEvent.Backen
 COPY ["SmartEvent.Backend.Application/SmartEvent.Backend.Application.csproj", "SmartEvent.Backend.Application/"]
 COPY ["SmartEvent.Backend.Core/SmartEvent.Backend.Core.csproj", "SmartEvent.Backend.Core/"]
 COPY ["SmartEvent.Backend.Persistence/SmartEvent.Backend.Persistence.csproj", "SmartEvent.Backend.Persistence/"]
+COPY ["SmartEvent.Backend.Infrastructure/SmartEvent.Backend.Infrastructure.csproj", "SmartEvent.Backend.Infrastructure/"]
 
 RUN dotnet restore "SmartEvent.Backend.Api/SmartEvent.Backend.Api.csproj"
 
