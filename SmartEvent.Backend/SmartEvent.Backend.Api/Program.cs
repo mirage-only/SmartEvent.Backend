@@ -55,15 +55,16 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartEvent API v1");
+    options.RoutePrefix = "swagger"; 
+});
 
 app.UseRouting(); 
+
+app.UseCors(specialCorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();
