@@ -29,7 +29,7 @@ public class AttendanceConfiguration: IEntityTypeConfiguration<Attendance>
         builder
             .HasOne(attendance => attendance.Event)
             .WithMany(@event => @event.Attendances)
-            .HasForeignKey(attendance => attendance.UserId)
+            .HasForeignKey(attendance => attendance.EventId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
