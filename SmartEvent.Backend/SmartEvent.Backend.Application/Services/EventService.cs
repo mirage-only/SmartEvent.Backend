@@ -57,6 +57,8 @@ public class EventService(IEventRepository eventRepository, IMapper mapper, IUse
 
     public async Task<Result<Guid>> AddEventAsync(AddEventDto addEventDto)
     {
+        const  string cantAddMessage = "We can't add event";
+        
         const uint defaultExpirationTime = 30;
         
         if (addEventDto.QrCodeExpirationTime == 0)
@@ -76,7 +78,7 @@ public class EventService(IEventRepository eventRepository, IMapper mapper, IUse
         var result = await eventRepository.AddEvent(newEvent);
 
         if (result.Id == Guid.Empty)
-            return Result<Guid>.Failure("We can't add event", HttpStatusCode.ExpectationFailed);
+            return Result<Guid>.Failure( cantAddMessage, HttpStatusCode.ExpectationFailed);
         
         return Result<Guid>.Success(newEvent.Id);
     }

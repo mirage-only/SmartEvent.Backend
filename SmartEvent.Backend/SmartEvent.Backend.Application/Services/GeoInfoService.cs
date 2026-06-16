@@ -10,15 +10,18 @@ public class GeoInfoService(ILocationService locationService): IGeoInfoService
 {
     public async Task<Result<LocationDto>> GetEventLocationByAddressAsync(string address)
     {
+        const string invalidAddressMessage = "Invalid address";
+        const string unknownErrorMessage = "Unknown error";
+        
         if(string.IsNullOrWhiteSpace(address)) 
             return Result<LocationDto>
-                .Failure("Invalid Address", HttpStatusCode.BadRequest);
+                .Failure(invalidAddressMessage, HttpStatusCode.BadRequest);
 
         var location = 
             await locationService.GetCoordinatesByAddressAsync(address);
     
         return location.IsSuccess ? location : Result<LocationDto>
-            .Failure("Something went wrong", HttpStatusCode.FailedDependency);
+            .Failure(unknownErrorMessage, HttpStatusCode.FailedDependency);
     }
 
     public double CalculateDistanceDifference(double eventLat, double eventLong, double userLat, double userLong)

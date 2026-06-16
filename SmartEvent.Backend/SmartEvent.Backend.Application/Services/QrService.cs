@@ -16,16 +16,20 @@ public class QrService(IQrCodeRepository qrCodeRepository, IEventRepository even
         const string badRequestMessage = "Event Id can't be null or empty";
         const string notFoundMessage = "Event not found";
         const string cantSaveQrCodeMessage = "We can't save the QrCode now, try again later";
+        
         if (eventId == null || eventId.Value == Guid.Empty) 
             return Result<CurrentQrCodeDto>.Failure(badRequestMessage, HttpStatusCode.BadRequest);
+        
         var eventWithQrCodes = await eventRepository.GetEventWithQrCodeByIdAsync(eventId.Value);
         if (eventWithQrCodes == null) return Result<CurrentQrCodeDto>.Failure(notFoundMessage, HttpStatusCode.NotFound);
+        
         var currentQr = eventWithQrCodes.CurrentQrCode;
         if (currentQr != null)
         {
             var currentQrCodeDto = mapper.Map<CurrentQrCodeDto>(currentQr);
             return Result<CurrentQrCodeDto>.Success(currentQrCodeDto);
         }
+        
         var newQr = new QrCode
         {
             Id = Guid.NewGuid(),
@@ -35,9 +39,12 @@ public class QrService(IQrCodeRepository qrCodeRepository, IEventRepository even
             ExpiresAt = DateTime.UtcNow.AddSeconds(eventWithQrCodes.QrCodeExpirationTime),
             CreatedAt = DateTime.UtcNow
         };
+        
         var dbResponse = await qrCodeRepository.AddQrCodeAsync(newQr);
         if (!dbResponse) return Result<CurrentQrCodeDto>.Failure(cantSaveQrCodeMessage, HttpStatusCode.InternalServerError);
+        
         var response = mapper.Map<CurrentQrCodeDto>(newQr);
+        
         return Result<CurrentQrCodeDto>.Success(response);
     }
 }

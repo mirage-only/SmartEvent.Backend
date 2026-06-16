@@ -17,10 +17,13 @@ namespace SmartEvent.Backend.Application.Services
     public class UserService(IUserRepository userRepository, IMapper mapper,
         IPasswordHasher passwordHasher, IJwtService jwtService) : IUserService
     {
+        private const string NotFoundUserMessage = "User not found";
+        private const string IncorrectIdMessage = "User id can't be null or empty";
+        private const string InvalidPasswordMessage = "Check your email or  password";
+        private const string UserExistMessage = "User with this  email already exists";
+        
         public async Task<Result<AuthorizeUserResponseDto>> RegisterUserAsync(RegisterUserRequestDto? request)
         {
-            const string userExistMessage = "User with this  email already exists";
-            
             ArgumentNullException.ThrowIfNull(request);
 
             var validator = new RegisterUserRequestDtoValidator();
@@ -35,7 +38,7 @@ namespace SmartEvent.Backend.Application.Services
             
             if (existingUser != null)
             {
-                return  Result<AuthorizeUserResponseDto>.Failure(userExistMessage,  HttpStatusCode.Conflict);
+                return  Result<AuthorizeUserResponseDto>.Failure(UserExistMessage,  HttpStatusCode.Conflict);
             }
 
             var user = mapper.Map<User>(request);
@@ -53,20 +56,17 @@ namespace SmartEvent.Backend.Application.Services
         
         public async Task<Result<AuthorizeUserResponseDto>> AuthorizeUserAsync(LoginUserRequestDto? request)
         {
-            const string notFoundUserMessage = "User not found";
-            const string invalidPasswordMessage = "Check your email or  password";
-            
             ArgumentNullException.ThrowIfNull(request);
 
             var user = await userRepository.GetUserByEmail(request.Email);
             
             if(user == null) return Result<AuthorizeUserResponseDto>
-                .Failure(notFoundUserMessage, HttpStatusCode.NotFound);
+                .Failure(NotFoundUserMessage, HttpStatusCode.NotFound);
 
             if (!passwordHasher.Verify(user.PasswordHash, request.Password))
             {
                 return Result<AuthorizeUserResponseDto>
-                    .Failure(invalidPasswordMessage, HttpStatusCode.Unauthorized);
+                    .Failure(InvalidPasswordMessage, HttpStatusCode.Unauthorized);
             }
             
             var token = jwtService.GenerateJwtToken(user);
@@ -95,12 +95,12 @@ namespace SmartEvent.Backend.Application.Services
         public async Task<Result<bool>> DeleteUserSoftAsync(Guid? id)
         {
             if (id == null || id == Guid.Empty)
-                return Result<bool>.Failure("User id can't be null or empty", HttpStatusCode.BadRequest);
+                return Result<bool>.Failure(IncorrectIdMessage, HttpStatusCode.BadRequest);
             
             var user = await userRepository.GetUserById(id.Value);
 
             if (user == null)
-                return Result<bool>.Failure($"User with id={id} not found", HttpStatusCode.NotFound);
+                return Result<bool>.Failure(NotFoundUserMessage, HttpStatusCode.NotFound);
             
             user.IsDeleted = true;
             user.DeletedAt = DateTime.Now;
