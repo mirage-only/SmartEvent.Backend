@@ -153,8 +153,8 @@ namespace SmartEvent.Backend.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Attendances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attendances_Events_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Attendances_Events_EventId",
+                        column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -180,6 +180,11 @@ namespace SmartEvent.Backend.Persistence.Migrations
                 name: "IX_Attendances_ConfirmedByOrganizerId",
                 table: "Attendances",
                 column: "ConfirmedByOrganizerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendances_EventId",
+                table: "Attendances",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendances_QrCodeId",

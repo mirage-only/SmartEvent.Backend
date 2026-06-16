@@ -56,6 +56,8 @@ namespace SmartEvent.Backend.Persistence.Migrations
 
                     b.HasIndex("ConfirmedByOrganizerId");
 
+                    b.HasIndex("EventId");
+
                     b.HasIndex("QrCodeId");
 
                     b.HasIndex("UserId");
@@ -257,15 +259,15 @@ namespace SmartEvent.Backend.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("ConfirmedByOrganizerId");
 
+                    b.HasOne("SmartEvent.Backend.Core.Models.Event", "Event")
+                        .WithMany("Attendances")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SmartEvent.Backend.Core.Models.QrCode", "QrCode")
                         .WithMany()
                         .HasForeignKey("QrCodeId");
-
-                    b.HasOne("SmartEvent.Backend.Core.Models.Event", "Event")
-                        .WithMany("Attendances")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
 
                     b.HasOne("SmartEvent.Backend.Core.Models.User", "User")
                         .WithMany("Attendances")
