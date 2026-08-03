@@ -3,6 +3,7 @@ using SmartEvent.Backend.Application.Interfaces.ICommon;
 using SmartEvent.Backend.Application.Interfaces.IServices;
 using SmartEvent.Backend.Shared.Contracts.Analytics;
 using SmartEvent.Backend.Shared.Contracts.Analytics.Enums;
+using SmartEvent.Backend.Shared.Contracts.AnalyticsEvents;
 
 namespace SmartEvent.Backend.Infrastructure.ExternalServices.AuthLoggerAnalyticsService;
 

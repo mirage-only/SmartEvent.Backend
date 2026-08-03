@@ -24,7 +24,7 @@
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
-        <PackageReference Include="smartevent.backend.shared.contracts" Version="1.0.2" />
+        <PackageReference Include="smartevent.backend.shared.contracts" Version="1.0.3" />
     </ItemGroup>
 
     <ItemGroup>

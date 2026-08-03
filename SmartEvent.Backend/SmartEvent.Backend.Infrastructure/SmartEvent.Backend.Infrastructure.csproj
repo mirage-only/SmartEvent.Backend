@@ -18,7 +18,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
-      <PackageReference Include="smartevent.backend.shared.contracts" Version="1.0.2" />
+      <PackageReference Include="smartevent.backend.shared.contracts" Version="1.0.3" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
     </ItemGroup>
 
