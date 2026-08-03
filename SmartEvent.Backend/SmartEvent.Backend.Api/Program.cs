@@ -1,3 +1,5 @@
+using Serilog;
+using Serilog.Enrichers.Span;
 using SmartEvent.Backend.Api.Handlers;
 using SmartEvent.Backend.Application;
 using SmartEvent.Backend.Infrastructure;
@@ -12,6 +14,13 @@ builder.Host.UseDefaultServiceProvider(options =>
     options.ValidateScopes = true;
     options.ValidateOnBuild = true;
 });
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .Enrich.FromLogContext()
+    .Enrich.WithSpan()
+    .WriteTo.Console());
+
 
 const string specialCorsPolicy = "corsPolicy";
 
