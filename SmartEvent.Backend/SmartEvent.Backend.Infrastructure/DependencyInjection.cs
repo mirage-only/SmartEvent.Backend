@@ -19,18 +19,6 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMassTransit(x =>
-        {
-            x.UsingRabbitMq((context, cfg) =>
-            {
-                cfg.Host("rabbitmq", "/", host =>
-                {
-                    host.Username("guest");
-                    host.Password("guest");
-                });
-            });
-        });
-        
         services.AddHttpClient();
         services.AddMemoryCache();
         

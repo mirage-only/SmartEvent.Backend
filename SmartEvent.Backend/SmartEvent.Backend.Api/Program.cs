@@ -1,3 +1,4 @@
+using MassTransit;
 using Serilog;
 using Serilog.Enrichers.Span;
 using SmartEvent.Backend.Api.Handlers;
@@ -50,6 +51,18 @@ services
     .AddPersistence(configuration)
     .AddApplication()
     .AddInfrastructure(configuration);
+
+services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("rabbitmq", "/", host =>
+        {
+            host.Username("guest");
+            host.Password("guest");
+        });
+    });
+});
 
 services.AddHttpContextAccessor();
 
