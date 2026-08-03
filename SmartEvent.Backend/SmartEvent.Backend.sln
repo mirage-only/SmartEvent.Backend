@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartEvent.Backend.Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartEvent.Backend.Persistence", "SmartEvent.Backend.Persistence\SmartEvent.Backend.Persistence.csproj", "{C971A744-EC02-4F53-90FB-90ED98959E20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartEvent.Backend.Application.Tests", "..\SmartEvent.Backend.Application.Tests\SmartEvent.Backend.Application.Tests.csproj", "{26D2BCCA-E38F-4567-AE29-DA77BF39951F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,9 +36,5 @@ Global
 		{C971A744-EC02-4F53-90FB-90ED98959E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C971A744-EC02-4F53-90FB-90ED98959E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C971A744-EC02-4F53-90FB-90ED98959E20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26D2BCCA-E38F-4567-AE29-DA77BF39951F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26D2BCCA-E38F-4567-AE29-DA77BF39951F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26D2BCCA-E38F-4567-AE29-DA77BF39951F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26D2BCCA-E38F-4567-AE29-DA77BF39951F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

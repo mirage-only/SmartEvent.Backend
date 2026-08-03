@@ -1,6 +1,5 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using SmartEvent.Backend.Application.Interfaces.ICommon;
 using SmartEvent.Backend.Application.Interfaces.IServices;
 using SmartEvent.Backend.Application.Services;
 

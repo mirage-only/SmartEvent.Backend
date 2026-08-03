@@ -12,11 +12,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MassTransit" Version="8.5.10" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.10" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
       <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
+      <PackageReference Include="smartevent.backend.shared.contracts" Version="1.0.2" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ExternalServices\NotificationService\" />
     </ItemGroup>
 
 </Project>
