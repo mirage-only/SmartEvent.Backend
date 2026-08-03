@@ -28,6 +28,10 @@ public class UserController(IUserService userService): BaseApiController
 
         return HandleResult(response);
     }
+    
+    [HttpGet("test/throw500")]
+    [AllowAnonymous]
+    public IActionResult Throw500() => throw new InvalidOperationException();
 
     [HttpPost("getAllUsersByAdmin")]
     [Authorize(Policy = "AdminOnly")]
