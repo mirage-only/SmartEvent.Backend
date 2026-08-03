@@ -1,6 +1,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
+ARG GITHUB_TOKEN
+
+COPY ["SmartEvent.Backend.sln", "./"]
+COPY ["nuget.config", "./"]
+
 COPY ["SmartEvent.Backend.sln", "./"]
 COPY ["SmartEvent.Backend.Api/SmartEvent.Backend.Api.csproj", "SmartEvent.Backend.Api/"]
 COPY ["SmartEvent.Backend.Application/SmartEvent.Backend.Application.csproj", "SmartEvent.Backend.Application/"]
@@ -9,6 +14,8 @@ COPY ["SmartEvent.Backend.Persistence/SmartEvent.Backend.Persistence.csproj", "S
 COPY ["SmartEvent.Backend.Infrastructure/SmartEvent.Backend.Infrastructure.csproj", "SmartEvent.Backend.Infrastructure/"]
 
 RUN dotnet restore "SmartEvent.Backend.Api/SmartEvent.Backend.Api.csproj"
+RUN GITHUB_TOKEN=$GITHUB_TOKEN dotnet restore "SmartEvent.Backend.Api/SmartEvent.Backend.Api.csproj"
+
 
 COPY . .
 
