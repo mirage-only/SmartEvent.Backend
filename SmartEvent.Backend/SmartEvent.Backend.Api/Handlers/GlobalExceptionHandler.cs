@@ -1,13 +1,28 @@
+using System.Diagnostics;
+using MassTransit;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SmartEvent.Backend.Core.Exceptions;
+using SmartEvent.Backend.Shared.Contracts.AnalyticsEvents;
 
 namespace SmartEvent.Backend.Api.Handlers;
 
-public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger): IExceptionHandler
+public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger,
+    IHostEnvironment hostEnvironment): IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
+        const string defaultTraceIdAndSpanId = "00000000000000000000000000000000";
+        
+        var traceId = Activity.Current?.TraceId.ToString();
+        if (string.IsNullOrEmpty(traceId) || traceId == defaultTraceIdAndSpanId)
+        {
+            traceId = httpContext.TraceIdentifier;
+        }
+        
+        var spanId = Activity.Current?.SpanId.ToString();
+        if (spanId == defaultTraceIdAndSpanId) spanId = null;
+        
         logger.LogError(exception, exception.Message);
 
         var (statusCode, title) = exception switch
@@ -28,6 +43,27 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger): IEx
         if (exception is ValidationException validationException)
         {
             problemDetails.Extensions.Add("errors", validationException.Errors);
+        }
+
+        if (statusCode == StatusCodes.Status500InternalServerError)
+        {
+            var publishEndpoint = httpContext.RequestServices.GetRequiredService<IPublishEndpoint>();
+            
+            await publishEndpoint.Publish(new SystemLogEvent
+            {
+                LogLevel = "Error",
+                ServiceName = "Monolith",
+                EnvironmentName = hostEnvironment.EnvironmentName,
+                TraceId = traceId,
+                SpanId = spanId,
+                Message = exception.Message,
+                Exception = exception.ToString(),
+                Properties = new Dictionary<string, object?>()
+                {
+                    ["HttpPath"] = httpContext.Request.Path.Value,
+                    ["HttpMethod"] = httpContext.Request.Method
+                }
+            }, cancellationToken);
         }
 
         httpContext.Response.StatusCode = statusCode;
