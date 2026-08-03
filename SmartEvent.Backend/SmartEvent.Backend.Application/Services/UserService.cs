@@ -14,6 +14,7 @@ using MassTransit;
 using SmartEvent.Backend.Application.Common.Extensions;
 using SmartEvent.Backend.Application.Interfaces.ICommon;
 using SmartEvent.Backend.Shared.Contracts;
+using SmartEvent.Backend.Shared.Contracts.Analytics.Enums;
 
 namespace SmartEvent.Backend.Application.Services
 {
@@ -72,16 +73,27 @@ namespace SmartEvent.Backend.Application.Services
 
             var user = await userRepository.GetUserByEmail(request.Email);
             
-            if(user == null) return Result<AuthorizeUserResponseDto>
-                .Failure(NotFoundUserMessage, HttpStatusCode.NotFound);
+            if(user == null)
+            {
+                await authLogger.LogAuthAsync(request.Email, null,
+                    status: AuthStatusEnum.Failure, failureReason: NotFoundUserMessage);
+                
+                return Result<AuthorizeUserResponseDto>
+                    .Failure(NotFoundUserMessage, HttpStatusCode.NotFound);
+            }
 
             if (!passwordHasher.Verify(user.PasswordHash, request.Password))
             {
+                await authLogger.LogAuthAsync(user.Email, user.Id,
+                    AuthStatusEnum.Failure,  InvalidPasswordMessage);
+                
                 return Result<AuthorizeUserResponseDto>
                     .Failure(InvalidPasswordMessage, HttpStatusCode.Unauthorized);
             }
             
             var token = jwtService.GenerateJwtToken(user);
+            
+            await authLogger.LogAuthAsync(user.Email,  user.Id,  AuthStatusEnum.Success);
 
             var responseDto = new AuthorizeUserResponseDto()
             {
