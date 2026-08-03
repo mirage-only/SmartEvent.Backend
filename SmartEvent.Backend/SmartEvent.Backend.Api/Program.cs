@@ -7,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services = builder.Services;
 
+builder.Host.UseDefaultServiceProvider(options =>
+{
+    options.ValidateScopes = true;
+    options.ValidateOnBuild = true;
+});
+
 const string specialCorsPolicy = "corsPolicy";
 
 services.AddCors(options =>
@@ -24,7 +30,7 @@ services.AddCors(options =>
             else
             {
                 policy
-                    .WithOrigins("https://smartevent-web.vercel.app")
+                    .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }

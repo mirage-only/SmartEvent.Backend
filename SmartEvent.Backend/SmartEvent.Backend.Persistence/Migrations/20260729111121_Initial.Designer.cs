@@ -12,7 +12,7 @@ using SmartEvent.Backend.Persistence;
 namespace SmartEvent.Backend.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260616020544_Initial")]
+    [Migration("20260729111121_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

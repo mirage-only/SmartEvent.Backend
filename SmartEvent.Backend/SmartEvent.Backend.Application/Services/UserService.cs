@@ -10,12 +10,17 @@ using SmartEvent.Backend.Core.Interfaces.IRepositories;
 using SmartEvent.Backend.Core.Models;
 using ValidationException = SmartEvent.Backend.Core.Exceptions.ValidationException;
 using AutoMapper.QueryableExtensions;
+using MassTransit;
 using SmartEvent.Backend.Application.Common.Extensions;
+using SmartEvent.Backend.Application.Interfaces.ICommon;
+using SmartEvent.Backend.Shared.Contracts;
 
 namespace SmartEvent.Backend.Application.Services
 {
-    public class UserService(IUserRepository userRepository, IMapper mapper,
-        IPasswordHasher passwordHasher, IJwtService jwtService) : IUserService
+    public class UserService(IUserRepository userRepository,
+        IMapper mapper, IPasswordHasher passwordHasher,
+        IJwtService jwtService, IPublishEndpoint publishEndpoint,
+        IUserContext userContext, IAuthLogger authLogger) : IUserService
     {
         private const string NotFoundUserMessage = "User not found";
         private const string IncorrectIdMessage = "User id can't be null or empty";
@@ -47,6 +52,13 @@ namespace SmartEvent.Backend.Application.Services
 
             await userRepository.AddUser(user);
 
+            await publishEndpoint.Publish(new UserRegisteredIntegrationEvent
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                Name = user.FirstName
+            });
+            
             var token = jwtService.GenerateJwtToken(user);
 
             var responseDto = new AuthorizeUserResponseDto { JwtToken = token };
