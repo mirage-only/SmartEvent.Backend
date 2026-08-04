@@ -19,9 +19,7 @@ builder.Host.UseDefaultServiceProvider(options =>
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
     .Enrich.FromLogContext()
-    .Enrich.WithSpan()
-    .WriteTo.Console());
-
+    .Enrich.WithSpan());
 
 const string specialCorsPolicy = "corsPolicy";
 
@@ -81,6 +79,7 @@ services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 
 app.UseSwagger();

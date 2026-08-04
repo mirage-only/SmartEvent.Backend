@@ -29,6 +29,7 @@
       </PackageReference>
       <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
       <PackageReference Include="Serilog.Enrichers.Span" Version="3.1.0" />
+      <PackageReference Include="Serilog.Sinks.Seq" Version="9.1.0" />
       <PackageReference Include="smartevent.backend.shared.contracts" Version="1.0.3.2" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.1.4" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.4" />
