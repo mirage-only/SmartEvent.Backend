@@ -36,6 +36,17 @@ services:
       #- ME_CONFIG_BASICAUTH=false
     depends_on:
       - mongodb
+  
+  seq:
+    image: datalust/seq:latest
+    container_name: seq_logger
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:80"
+    volumes:
+      - seq_data:/data
+    restart: unless-stopped
 
   smartevent.api:
     image: smartevent-api
@@ -56,3 +67,4 @@ services:
 volumes:
   mongo_data:
   rabbitmq_data:
+  seq_date:
