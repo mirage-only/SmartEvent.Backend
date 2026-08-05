@@ -23,7 +23,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger,
         var spanId = Activity.Current?.SpanId.ToString();
         if (spanId == defaultTraceIdAndSpanId) spanId = null;
         
-        logger.LogError(exception, exception.Message);
+        logger.LogError(exception,"Something went wrong. TraceId: {TraceId}, SpanId: {SpanId},  Path: {Path}", traceId, spanId, httpContext.Request.Path);
 
         var (statusCode, title) = exception switch
         {
